@@ -1,8 +1,8 @@
 function plotFeeder_capacity(TT)
-load('New.mat','obj');
-AA=obj.Data.A;
+load('New100.mat','obj');
+AA=obj.Data.U_feeder;
 if nargin==0
-    TT='New.mat';
+    TT='New100.mat';
 end
 load(TT,'obj')
 linestyle = {'-', '--', ':', '-.','--',};

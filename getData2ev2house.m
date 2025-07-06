@@ -17,7 +17,7 @@ classdef getData2ev2house<A_data
         a_rep=0.003;b_rep=0.03;c_rep=0; 
 
         % for battery
-        Capacity_bat=0.002;% kw*h
+        Capacity_bat=10% kw*h
 
         numer_of_feeder;
 
@@ -42,8 +42,8 @@ classdef getData2ev2house<A_data
             end 
             ne=1;nr=1;
             obj.numer_of_feeder=2;
-            obj.GC=GC(1+5:nr*obj.numer_of_feeder+5,:);% kw
-            obj.GG=GG(1+5:nr*obj.numer_of_feeder+5,:);% kw
+            obj.GC=GC(1:nr*obj.numer_of_feeder,:);% kw
+            obj.GG=GG(1:nr*obj.numer_of_feeder,:);% kw
             obj.Ne=ne*obj.numer_of_feeder;
             [Nr,NT]=size(obj.GC);
             obj.Nr=Nr;obj.T=NT;
@@ -76,7 +76,7 @@ function [A,B]=LineCapacityConstraints_2(ne,nr)
 %5   
 Ne=ne*2;Nr=nr*2;
 A=zeros(2,Nr+Ne);
-B=[3;1.5]*1;% (kw)
+B=[3;0.5]*1;% (kw)
 
 A(1,1:Ne)=1;                     
 A(2,2:Ne)=1;              

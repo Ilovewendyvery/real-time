@@ -17,7 +17,7 @@ classdef getData1ev1house<A_data
         a_rep=0.003;b_rep=0.03;c_rep=0;
 
         % for battery
-        Capacity_bat=0.002;% kw*h
+        Capacity_bat=0.1;% kw*h
 
         numer_of_feeder;
 

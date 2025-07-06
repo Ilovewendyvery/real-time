@@ -1,6 +1,6 @@
 function err()
-data='2';
-method='Corr';
+data='100';
+method='Prox';
 
 
 close all; 

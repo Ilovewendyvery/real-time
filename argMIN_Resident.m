@@ -12,7 +12,7 @@ classdef argMIN_Resident
 
          debug=0;
 
-         bat_beta=0.01;
+         bat_beta=1;
     end
     
     methods

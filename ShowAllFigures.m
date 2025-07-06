@@ -1,9 +1,6 @@
 %run
 close all;
-ploterr('1');
-ploterr('2');
-ploterr('100');
-
-
+test;
+ploterr()
 plotBESScharginganddischarging();
 plotFeeder_capacity;
