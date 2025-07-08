@@ -76,7 +76,7 @@ function [A,B]=LineCapacityConstraints_2(ne,nr)
 %5   
 Ne=ne*2;Nr=nr*2;
 A=zeros(2,Nr+Ne);
-B=[3;0.5]*0.8;% (kw)
+B=[3;1]*0.8;% (kw)
 
 A(1,1:Ne)=1;                     
 A(2,2:Ne)=1;              
