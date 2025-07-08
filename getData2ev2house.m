@@ -42,8 +42,8 @@ classdef getData2ev2house<A_data
             end 
             ne=1;nr=1;
             obj.numer_of_feeder=2;
-            obj.GC=GC(1:nr*obj.numer_of_feeder,:);% kw
-            obj.GG=GG(1:nr*obj.numer_of_feeder,:);% kw
+            obj.GC=GC(2:nr*obj.numer_of_feeder+1,:);% kw
+            obj.GG=GG(2:nr*obj.numer_of_feeder+1,:);% kw
             obj.Ne=ne*obj.numer_of_feeder;
             [Nr,NT]=size(obj.GC);
             obj.Nr=Nr;obj.T=NT;
@@ -76,7 +76,7 @@ function [A,B]=LineCapacityConstraints_2(ne,nr)
 %5   
 Ne=ne*2;Nr=nr*2;
 A=zeros(2,Nr+Ne);
-B=[3;0.5]*1;% (kw)
+B=[3;0.5]*0.8;% (kw)
 
 A(1,1:Ne)=1;                     
 A(2,2:Ne)=1;              
