@@ -8,7 +8,7 @@ classdef getData2ev2house<A_data
         minResident;
 
         % for EV
-        beta_ev=8;omega_ev=1;thresholds_ev=10; %kw
+        beta_ev=8;omega_ev=1;thresholds_ev=1.5; %kw
 
         % for Resident
         alpha_re=0.9;omega_re=20;
@@ -76,7 +76,7 @@ function [A,B]=LineCapacityConstraints_2(ne,nr)
 %5   
 Ne=ne*2;Nr=nr*2;
 A=zeros(2,Nr+Ne);
-B=[3;1]*0.8;% (kw)
+B=[3;2]*10;% (kw)
 
 A(1,1:Ne)=1;                     
 A(2,2:Ne)=1;              
