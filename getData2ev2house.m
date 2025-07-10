@@ -8,7 +8,7 @@ classdef getData2ev2house<A_data
         minResident;
 
         % for EV
-        beta_ev=8;omega_ev=1;thresholds_ev=1.5; %kw
+        beta_ev=8;omega_ev=1;thresholds_ev=10; %kw
 
         % for Resident
         alpha_re=0.9;omega_re=20;
@@ -25,11 +25,11 @@ classdef getData2ev2house<A_data
         GG;
   
         U_feeder;
-        B_feeder;
+        B_feeder=[3;2];
         Lmax;
     end
     methods  
-        function obj=getData2ev2house()
+        function obj=getData2ev2house() 
             %ConNet = ConstraintsNetwork(0,1,0);
             is_summer=1;
             is_constrain=1;
@@ -48,18 +48,17 @@ classdef getData2ev2house<A_data
             [Nr,NT]=size(obj.GC);
             obj.Nr=Nr;obj.T=NT;
 
-            [A,B]=LineCapacityConstraints_2(ne,nr);
+            [A]=LineCapacityConstraints_2(ne,nr);
 
 
             if is_constrain==0
-                A=[];B=[];
+                A=[];obj.B_feeder=[];
             end
-            obj.U_feeder = A;
-            obj.B_feeder = B;    
-            if isempty(B)
+            obj.U_feeder = A;   
+            if isempty(obj.B_feeder)
                 Lmax=400;
             else
-                Lmax=B(1);
+                Lmax=obj.B_feeder(1);
             end
             obj.Lmax=Lmax;
 
@@ -72,11 +71,10 @@ classdef getData2ev2house<A_data
     end
 end
  
-function [A,B]=LineCapacityConstraints_2(ne,nr)
+function [A]=LineCapacityConstraints_2(ne,nr)
 %5   
 Ne=ne*2;Nr=nr*2;
-A=zeros(2,Nr+Ne);
-B=[3;2]*10;% (kw)
+A=zeros(2,Nr+Ne); 
 
 A(1,1:Ne)=1;                     
 A(2,2:Ne)=1;              
