@@ -12,7 +12,9 @@ classdef (Abstract) A_data
         % Parameters about EV
         beta_ev;
         omega_ev;
-        thresholds_ev; 
+        Pmax_ev; 
+        Capacity_EV;
+        
 
         % Parameters about Resident
         alpha_re;

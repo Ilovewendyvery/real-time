@@ -8,7 +8,8 @@ classdef getData1ev1house<A_data
         minResident;
 
         % for EV
-        beta_ev=8;omega_ev=1;thresholds_ev=10; %kw
+        beta_ev=8;omega_ev=1;Pmax_ev=10; %kw
+        Capacity_EV=60;
 
         % for Resident
         alpha_re=0.9;omega_re=20;
@@ -59,9 +60,9 @@ classdef getData1ev1house<A_data
             end
             obj.Lmax=Lmax;
 
-            obj.BPVL = BatteryandPVandLoad(obj.GC,obj.GG,obj.Capacity_bat);
+            obj.BPVL = BatteryandPVandLoad(obj.GC,obj.GG,obj.Capacity_bat,obj.Capacity_EV);
             obj.minREP=argMIN_REP(obj.U_feeder,obj.B_feeder,obj.a_rep,obj.b_rep,obj.c_rep,obj.Ne+obj.Nr);
-            obj.minEV=argMIN_EV(obj.beta_ev,obj.omega_ev,obj.thresholds_ev);
+            obj.minEV=argMIN_EV(obj.beta_ev,obj.omega_ev,obj.Pmax_ev);
             obj.minResident = argMIN_Resident(obj.BPVL,obj.GC,obj.alpha_re,obj.omega_re); 
         end
 

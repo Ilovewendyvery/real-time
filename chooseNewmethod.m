@@ -2,7 +2,7 @@ classdef chooseNewmethod<A_OptMethod
     properties   
         iter_max=200;
 
-        beta=1.9;
+        beta=1;
         mu=1; 
 
         debug=1;
@@ -11,7 +11,7 @@ classdef chooseNewmethod<A_OptMethod
         function obj=chooseNewmethod() 
         end
  
-        function [Pev,Pbuy,Pbat,Lambda] = Solve(obj,D,GG2Bat,SOC,k)
+        function [Pev,Pbuy,Pbat,Lambda] = Solve(obj,D,GG2Bat,SOC,SOCV_of_EV,k)
             Pev=zeros(D.Ne,1);
             Pbuy=zeros(D.Nr,1);
             Pbat=zeros(D.Nr,1);
@@ -21,8 +21,7 @@ classdef chooseNewmethod<A_OptMethod
             Lambda=zeros(D.Nr+D.Ne,1)+0.1;
 
             % Main iteration
-            for iter=1:obj.iter_max
-                Lambdaold=Lambda;
+            for iter=1:obj.iter_max 
                 %%
                 % Update X1 (Ne+Nr,1) )
                                           %lambda,PevPbuy_old,beta,L_old,mu,x0
@@ -33,7 +32,11 @@ classdef chooseNewmethod<A_OptMethod
                 %%
                 % Update Pev
                 for i=1:D.Ne 
-                    Pev(i)=D.minEV.Solve(tilde_Lambda(i),0,0,Pev(i),obj.mu);
+                    if SOCV_of_EV(i)>=1
+                        Pev(i)=0;
+                    else                        
+                        Pev(i)=D.minEV.Solve(tilde_Lambda(i),0,0,Pev(i),obj.mu);
+                    end
                 end 
                 %%
                 % Update Pbuy and Pbat

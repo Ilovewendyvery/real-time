@@ -6,18 +6,22 @@ close all;
 switch 1
     case 1
         obj= Algorithms('2','New');
-        obj.Data.minREP.B_feeder=[3;2]*10;
-        obj.Data.minEV.thresholds=1.5;
+        obj.Data.minREP.B_feeder=[3;2]*1;
+        obj.Data.minEV.Pmax_ev=3;
+        obj.Data.minResident.omega_re=4;
         
         Solve_ALL(obj)
         % save('testpevmax1p5beta3.mat','obj')
         % save('testpevmax1p5beta2p4.mat','obj')
-        save('testpevmax1p5beta30.mat','obj')
+%         save('testpevmax1p5beta30.mat','obj')
         
         %  save('testpevmax1p5beta5.mat','obj')
         %  save('testpevmax3beta5.mat','obj')
         %  save('testpevmax10beta5.mat','obj')
+        
+        save('testpevmax10beta30.mat','obj')
         draw(obj,10)
+        drawSOC(obj,11)
     case 2
         load('testpevmax1p5beta2p4.mat','obj')
         draw(obj,1)
@@ -36,8 +40,8 @@ switch 1
 end
 
 function draw(obj,k)
-time=(1:48)/2;
 figure(k)
+time=(1:48)/2;
 hold on;
 plot(time,obj.PevT(1,:),'r+')
 plot(time,obj.PbuyT(1,:),'r-')
@@ -50,9 +54,18 @@ hold off;
 legend('Pev1','Pbuy1','Pev2','Pbuy2','Pev1+Pbuy1','Pev2+Pbuy2(feeder2)','Pev1+Pbuy1+Pev2+Pbuy2(feeder1)')
 xlabel('time(h)');ylabel('power(kW)')
 b1=num2str(obj.Data.minREP.B_feeder(1));b2=num2str(obj.Data.minREP.B_feeder(2));
-thresholds=num2str(obj.Data.minEV.thresholds);
-title(strcat('  threoshold=',thresholds,'  \beta_1=',b1,'  \beta_2=',b2))
+Pmax_ev=num2str(obj.Data.minEV.Pmax_ev);
+title(strcat('  Pmax of ev=',Pmax_ev,'  \beta_1=',b1,'  \beta_2=',b2))
 box on
+end
+function drawSOC(obj,k)
+figure(k)
+time=(0:48)/2;
+hold on;
+plot(time,obj.Data.BPVL.SOC(1,:))
+plot(time,obj.Data.BPVL.SOC_of_EV(1,:))
+hold off;
+legend('SOC of Bat','SOC of EV')
 end
 
 

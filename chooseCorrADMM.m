@@ -11,7 +11,7 @@ classdef chooseCorrADMM<A_OptMethod
         function obj=chooseCorrADMM()
         end
 
-        function [Pev,Pbuy,Pbat,Lambda] = Solve(obj,D,GG2Bat,SOC,k)
+        function [Pev,Pbuy,Pbat,Lambda] = Solve(obj,D,GG2Bat,SOC,SOCV_of_EV,k)
            Pev=zeros(D.Ne,1);
             Pbuy=zeros(D.Nr,1);
             Pbat=zeros(D.Nr,1);
@@ -29,19 +29,23 @@ classdef chooseCorrADMM<A_OptMethod
 
                 % Solve each x_j-subproblem
                 L=D.minREP.Solve_T(Lambda,sum([Pev;Pbuy]),obj.beta,L,0); 
-                for i=1:D.Ne
-                    if isempty(D.B_feeder)
-                        UB=400;
+                for i=1:D.Ne                    
+                    if SOCV_of_EV(i)>=1
+                        Pev(i)=0;
                     else
-                        Bool=logical(D.U_feeder(:,i));
-                        UB= D.B_feeder- (D.U_feeder*PevPbuyold-D.U_feeder(:,i).*PevPbuyold(i));
-                        UB=min(UB(Bool));
+                        if isempty(D.B_feeder)
+                            UB=400;
+                        else
+                            Bool=logical(D.U_feeder(:,i));
+                            UB= D.B_feeder- (D.U_feeder*PevPbuyold-D.U_feeder(:,i).*PevPbuyold(i));
+                            UB=min(UB(Bool));
+                        end
+                        xx=D.minEV.Solve_T(Lambda,sum([Pev;Pbuy])-L,obj.beta,Pev(i),0,UB);
+                        if isempty(xx)
+                            xx=0;
+                        end
+                        Pev(i)=xx;
                     end
-                    xx=D.minEV.Solve_T(Lambda,sum([Pev;Pbuy])-L,obj.beta,Pev(i),0,UB);
-                    if isempty(xx)
-                        xx=0;
-                    end
-                    Pev(i)=xx; 
                 end
 
                 for j=1:D.Nr

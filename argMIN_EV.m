@@ -1,34 +1,36 @@
 classdef argMIN_EV 
     properties
-         beta;
-         omega_e;
-         thresholds;
+         beta_ev;
+         omega_ev;
+         Pmax_ev;
 
          debug=0;
     end
     
     methods
-        function obj = argMIN_EV(beta,omega_e,thresholds) 
-            obj.beta=beta;
-            obj.omega_e=omega_e;
-            obj.thresholds=thresholds;
+        function obj = argMIN_EV(beta_ev,omega_ev,Pmax_ev) 
+            obj.beta_ev=beta_ev;
+            obj.omega_ev=omega_ev;
+            obj.Pmax_ev=Pmax_ev;
         end
 
         
         function U =Utility_fun(obj,Pev_i) 
             % Kw
-            U=obj.beta*log(obj.omega_e*min(Pev_i,obj.thresholds)+1)/log(3);
+            U=obj.beta_ev*log(obj.omega_ev*min(Pev_i,obj.Pmax_ev)+1)/log(3);
         end
+        
+ 
         
         function Pev_i =Solve(obj,lambda_i,X1_i,beta,PevOld_i,mu)
             % lambda;Augmented;Augmented_coefficient;Proximity;Proximity_coefficient
             fun = @(x) -obj.Utility_fun(x)-lambda_i*x+0.5*beta*(x-X1_i).^2+0.5*mu*(x-PevOld_i).^2;
 
             options = optimset('Display', 'off');
-            Pev_i = fminbnd(fun,0,obj.thresholds,options);
+            Pev_i = fminbnd(fun,0,obj.Pmax_ev,options);
 
             if obj.debug==1
-                plot(0:obj.thresholds,fun(0:obj.thresholds),'r-');hold on;
+                plot(0:obj.Pmax_ev,fun(0:obj.Pmax_ev),'r-');hold on;
                 plot(Pev_i,fun(Pev_i),'b*');
             end
         end
@@ -38,11 +40,11 @@ classdef argMIN_EV
             fun = @(x) -obj.Utility_fun(x)-lambda_i*x+0.5*beta*(x+sumx_L-PevOld_i).^2+0.5*mu*(x-PevOld_i).^2;
 
             options = optimset('Display', 'off');
-            UB=min(UB,obj.thresholds);
+            UB=min(UB,obj.Pmax);
             Pev_i = fminbnd(fun,0,UB,options);
 
             if obj.debug==1
-                plot(0:obj.thresholds,fun(0:UB),'r-');hold on;
+                plot(0:obj.Pmax_ev,fun(0:UB),'r-');hold on;
                 plot(Pev_i,fun(Pev_i),'b*');
             end
         end

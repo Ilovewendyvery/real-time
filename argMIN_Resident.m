@@ -1,8 +1,8 @@
 classdef argMIN_Resident 
     
     properties
-         alpha; 
-         omega_r; 
+         alpha_re; 
+         omega_re; 
 
 
          GG2user;GC;
@@ -16,8 +16,8 @@ classdef argMIN_Resident
     end
     
     methods
-        function obj = argMIN_Resident(BPVL,GC,alpha,omega_r)
-            obj.alpha=alpha;obj.omega_r=omega_r; 
+        function obj = argMIN_Resident(BPVL,GC,alpha_re,omega_re)
+            obj.alpha_re=alpha_re;obj.omega_re=omega_re; 
             obj.GG2user=BPVL.GG2user;
             obj.GC=GC;
             obj.eta=BPVL.eta;
@@ -26,10 +26,10 @@ classdef argMIN_Resident
         end
         
         function U =Utility_fun(obj,Pbuy_j,Pbat_j,j,k) 
-            U=obj.omega_r*((Pbuy_j+Pbat_j+obj.GG2user(j,k))).^obj.alpha;
+            U=obj.omega_re*((Pbuy_j+Pbat_j+obj.GG2user(j,k))).^obj.alpha_re;
 
             idx=Pbuy_j+Pbat_j+obj.GG2user(j,k) > obj.GC(j,k);
-            U(idx)= obj.omega_r*(obj.GC(j,k)).^obj.alpha; 
+            U(idx)= obj.omega_re*(obj.GC(j,k)).^obj.alpha_re; 
         end
 
         function C=Cost_func(obj,Pbat_j,GG2Bat_j,SOC) 

@@ -10,7 +10,7 @@ classdef chooseProxADMM<A_OptMethod
         function obj=chooseProxADMM()
         end
 
-        function [Pev,Pbuy,Pbat,Lambda] = Solve(obj,D,GG2Bat,SOC,k)
+        function [Pev,Pbuy,Pbat,Lambda] = Solve(obj,D,GG2Bat,SOC,SOCV_of_EV,k)
             Pev=zeros(D.Ne,1);
             Pbuy=zeros(D.Nr,1);
             Pbat=zeros(D.Nr,1);
@@ -24,18 +24,22 @@ classdef chooseProxADMM<A_OptMethod
                 % Solve each x_j-subproblem
                 L=D.minREP.Solve_T(Lambda,sum([Pev;Pbuy]),obj.beta,L,obj.mu);
                 for i=1:D.Ne
-                    if isempty(D.B_feeder)
-                        UB=400;
+                    if SOCV_of_EV(i)>=1
+                        Pev(i)=0;
                     else
-                        Bool=logical(D.U_feeder(:,i));
-                        UB= D.B_feeder- (D.U_feeder*PevPbuyold-D.U_feeder(:,i).*PevPbuyold(i));
-                        UB=min(UB(Bool));
-                    end
-                    xx=D.minEV.Solve_T(Lambda,sum([Pev;Pbuy])-L,obj.beta,Pev(i),obj.mu,UB);
-                    if isempty(xx)
-                        xx=0;
-                    end
-                    Pev(i)=xx;
+                        if isempty(D.B_feeder)
+                            UB=400;
+                        else
+                            Bool=logical(D.U_feeder(:,i));
+                            UB= D.B_feeder- (D.U_feeder*PevPbuyold-D.U_feeder(:,i).*PevPbuyold(i));
+                            UB=min(UB(Bool));
+                        end
+                        xx=D.minEV.Solve_T(Lambda,sum([Pev;Pbuy])-L,obj.beta,Pev(i),obj.mu,UB);
+                        if isempty(xx)
+                            xx=0;
+                        end
+                        Pev(i)=xx;
+                    end 
                 end
 
                 for j=1:D.Nr

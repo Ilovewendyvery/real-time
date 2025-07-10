@@ -36,19 +36,21 @@ classdef Algorithms<handle
 
         function Solve_ALL(obj)
             for k=1:obj.Data.T
-                obj.Data.BPVL.UndateGG2Bat(k);
+                obj.Data.BPVL.UpdateGG2Bat(k);
                 GG2BatV=obj.Data.BPVL.GG2Bat(:,k);
                 SOCV=obj.Data.BPVL.SOC(:,k);
-                [Pev,Pbuy,Pbat,Lambda]=obj.Method.Solve(obj.Data,GG2BatV,SOCV,k);
-                obj.Data.BPVL.UndateSOC(Pbat,k);
+                SOCV_of_EV=obj.Data.BPVL.SOC_of_EV(:,k);
+                [Pev,Pbuy,Pbat,Lambda]=obj.Method.Solve(obj.Data,GG2BatV,SOCV,SOCV_of_EV,k);
+                obj.Data.BPVL.UpdateSOC(Pbat,k);
+                obj.Data.BPVL.UpdateSOC_of_EV(Pev,k)
 
                 obj.PevT(:,k)=Pev;
                 obj.PbuyT(:,k)=Pbuy;
                 obj.PbatT(:,k)=Pbat;
                 obj.LambdaT(:,k)=Lambda;
 
-                %Shadow price and SOC
-                disp([Lambda(1),obj.Data.BPVL.SOC(1,k)])
+                %Shadow price and SOC 
+                disp(['price is: ', num2str(-Lambda(1)), '  bat SOC is: ', num2str(obj.Data.BPVL.SOC(1,k))]);
             end
         end
 
