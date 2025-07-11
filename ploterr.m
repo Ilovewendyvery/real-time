@@ -1,5 +1,5 @@
 function ploterr()  
-data='2err';
+data='100err';
 load(strcat('Prox',data),'A'); 
 A_Prox=A;
 load(strcat('Corr',data),'A'); 

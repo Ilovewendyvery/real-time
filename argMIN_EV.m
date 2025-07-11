@@ -40,7 +40,7 @@ classdef argMIN_EV
             fun = @(x) -obj.Utility_fun(x)-lambda_i*x+0.5*beta*(x+sumx_L-PevOld_i).^2+0.5*mu*(x-PevOld_i).^2;
 
             options = optimset('Display', 'off');
-            UB=min(UB,obj.Pmax);
+            UB=min(UB,obj.Pmax_ev);
             Pev_i = fminbnd(fun,0,UB,options);
 
             if obj.debug==1

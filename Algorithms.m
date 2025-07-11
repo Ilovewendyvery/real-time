@@ -58,7 +58,8 @@ classdef Algorithms<handle
         function [Originale,Consistente,f]=Solve_All_convergence(obj,new_s)
             GG2Batv=obj.Data.BPVL.GG2Bat(:,1);
             SOCv=obj.Data.BPVL.SOC(:,1);
-            [Originale,Consistente,f]=obj.Method.Solve_convergence(obj.Data,GG2Batv,SOCv,1,new_s); 
+            SOCV_of_EV=obj.Data.BPVL.SOC_of_EV(:,1);
+            [Originale,Consistente,f]=obj.Method.Solve_convergence(obj.Data,GG2Batv,SOCv,SOCV_of_EV,1,new_s); 
         end
     end
 

@@ -1,6 +1,6 @@
 classdef chooseProxADMM<A_OptMethod
     properties
-        iter_max=20;
+        iter_max=200;
         beta=1;
         mu=1;
 
@@ -64,7 +64,7 @@ classdef chooseProxADMM<A_OptMethod
         end
 
 
-        function [Originale,Consistente,f,Pbat]=Solve_convergence(obj,D,GG2Bat,SOC,k,new_iter)
+        function [Originale,Consistente,f,Pbat]=Solve_convergence(obj,D,GG2Bat,SOC,SOCV_of_EV,k,new_iter)
             Pev=zeros(D.Ne,1);
             Pbuy=zeros(D.Nr,1);
             Pbat=zeros(D.Nr,1);
@@ -84,20 +84,26 @@ classdef chooseProxADMM<A_OptMethod
                 fvalue=fvalue+D.minREP.Cost_fun(L);
 
                 for i=1:D.Ne
-                    if isempty(D.B_feeder)
-                        UB=400;
+                    if SOCV_of_EV(i)>=1
+                        Pev(i)=0;
+                        
+                        fvalue=fvalue-D.minEV.Utility_fun(D.minEV.Pmax_ev);
                     else
-                        Bool=logical(D.U_feeder(:,i));
-                        UB= D.B_feeder- (D.U_feeder*PevPbuyold-D.U_feeder(:,i).*PevPbuyold(i));
-                        UB=min(UB(Bool));
-                    end
-                    xx=D.minEV.Solve_T(Lambda,sum([Pev;Pbuy])-L,obj.beta,Pev(i),obj.mu,UB);
-                    if isempty(xx)
-                        xx=0;
-                    end
-                    Pev(i)=xx;
-
-                    fvalue=fvalue-D.minEV.Utility_fun(Pev(i));
+                        if isempty(D.B_feeder)
+                            UB=400;
+                        else
+                            Bool=logical(D.U_feeder(:,i));
+                            UB= D.B_feeder- (D.U_feeder*PevPbuyold-D.U_feeder(:,i).*PevPbuyold(i));
+                            UB=min(UB(Bool));
+                        end
+                        xx=D.minEV.Solve_T(Lambda,sum([Pev;Pbuy])-L,obj.beta,Pev(i),obj.mu,UB);
+                        if isempty(xx)
+                            xx=0;
+                        end
+                        Pev(i)=xx;
+                        
+                        fvalue=fvalue-D.minEV.Utility_fun(Pev(i));
+                    end 
                 end
 
                 for j=1:D.Nr

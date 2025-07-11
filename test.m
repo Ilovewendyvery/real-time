@@ -3,12 +3,12 @@ clear;
 clc;
 close all;
 
-switch 1
+switch 2
     case 1
         obj= Algorithms('2','New');
         obj.Data.minREP.B_feeder=[3;2]*1;
         obj.Data.minEV.Pmax_ev=3;
-        obj.Data.minResident.omega_re=4;
+        obj.Data.minResident.omega_re=20;
         
         Solve_ALL(obj)
         % save('testpevmax1p5beta3.mat','obj')
@@ -53,7 +53,8 @@ plot(time,obj.PevT(1,:)+obj.PbuyT(1,:)+obj.PevT(2,:)+obj.PbuyT(2,:),'g-','LineWi
 hold off;
 legend('Pev1','Pbuy1','Pev2','Pbuy2','Pev1+Pbuy1','Pev2+Pbuy2(feeder2)','Pev1+Pbuy1+Pev2+Pbuy2(feeder1)')
 xlabel('time(h)');ylabel('power(kW)')
-b1=num2str(obj.Data.minREP.B_feeder(1));b2=num2str(obj.Data.minREP.B_feeder(2));
+b1=num2str(obj.Data.minREP.B_feeder(1));
+b2=num2str(obj.Data.minREP.B_feeder(2));
 Pmax_ev=num2str(obj.Data.minEV.Pmax_ev);
 title(strcat('  Pmax of ev=',Pmax_ev,'  \beta_1=',b1,'  \beta_2=',b2))
 box on

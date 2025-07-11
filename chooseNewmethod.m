@@ -60,7 +60,7 @@ classdef chooseNewmethod<A_OptMethod
         end
 
 
-        function [Originale,Consistente,f,Pbat]=Solve_convergence(obj,D,GG2Bat,SOC,k,new_iter)
+        function [Originale,Consistente,f,Pbat]=Solve_convergence(obj,D,GG2Bat,SOC,SOCV_of_EV,k,new_iter)
             Pev=zeros(D.Ne,1);
             Pbuy=zeros(D.Nr,1);
             Pbat=zeros(D.Nr,1);
@@ -81,10 +81,15 @@ classdef chooseNewmethod<A_OptMethod
                 tilde_Lambda=Lambda-obj.beta*([Pev;Pbuy]-X1); 
                 %%
                 for i=1:D.Ne 
-                    Pev(i)=D.minEV.Solve(tilde_Lambda(i),0,0,Pev(i),obj.mu);
-
-                    fvalue=fvalue-D.minEV.Utility_fun(Pev(i));
-                end  
+                    if SOCV_of_EV(i)>=1
+                        Pev(i)=0;
+                        fvalue=fvalue-D.minEV.Utility_fun(D.minEV.Pmax_ev);
+                    else                        
+                        Pev(i)=D.minEV.Solve(tilde_Lambda(i),0,0,Pev(i),obj.mu);
+                        fvalue=fvalue-D.minEV.Utility_fun(Pev(i));
+                    end
+                end                
+                 
                 %%
                 for j=1:D.Nr 
                     [x,y]=D.minResident.Solve(tilde_Lambda(j+D.Ne),0,0,Pbuy(j),Pbat(j),SOC(j),GG2Bat(j),obj.mu,j,k);
