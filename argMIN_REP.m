@@ -4,7 +4,7 @@ classdef argMIN_REP
         Lmax; %Maximum production capacity 
 
         U_feeder;  B_feeder;
-        lb; ub;
+        lb; 
     end
     
     methods
@@ -18,8 +18,7 @@ classdef argMIN_REP
             end
 
             obj.a_rep=a_rep;obj.b_rep=b_rep;obj.c_rep=c_rep; 
-            obj.lb=zeros(N,1);
-            obj.ub=zeros(N,1)+obj.Lmax;
+            obj.lb=zeros(N,1); 
         end 
 
         function C =Cost_fun(obj,L) 
@@ -37,7 +36,7 @@ classdef argMIN_REP
             H=2*obj.a_rep*ones(N,N)+(beta+mu)*eye(N);
             f=obj.b_rep*ones(N,1)+lambda-beta*PevPbuy_old-mu*L_old;
             options = optimset('Display', 'off');
-            L=quadprog(H,f,obj.U_feeder,obj.B_feeder,[],[],obj.lb,obj.ub,x0,options);
+            L=quadprog(H,f,obj.U_feeder,obj.B_feeder,[],[],obj.lb,zeros(N,1)+obj.B_feeder(1),x0,options);
         end
 
         function C =Cost_fun_T(obj,L)  

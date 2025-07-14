@@ -8,7 +8,7 @@ classdef getData2ev2house<A_data
         minResident;
 
         % for EV
-        beta_ev=8;omega_ev=1;Pmax_ev=2; %kw
+        beta_ev=8;omega_ev=1;Pmax_ev=10; %kw
         Capacity_EV=60;
 
         % for Resident

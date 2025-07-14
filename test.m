@@ -3,12 +3,14 @@ clear;
 clc;
 close all;
 
-switch 2
+switch 1
     case 1
         obj= Algorithms('2','New');
-        obj.Data.minREP.B_feeder=[3;2]*1;
-        obj.Data.minEV.Pmax_ev=3;
-        obj.Data.minResident.omega_re=20;
+        obj.Data.minREP.B_feeder=[3;2]*10;
+        obj.Data.minEV.Pmax_ev=10;
+        obj.Data.BPVL.Capacity_EV=60;
+        
+        obj.Data.minResident.omega_re=2;
         
         Solve_ALL(obj)
         % save('testpevmax1p5beta3.mat','obj')

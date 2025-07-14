@@ -30,8 +30,14 @@ classdef argMIN_EV
             Pev_i = fminbnd(fun,0,obj.Pmax_ev,options);
 
             if obj.debug==1
-                plot(0:obj.Pmax_ev,fun(0:obj.Pmax_ev),'r-');hold on;
+                figure(1)
+                hold on;
+                plot(0:obj.Pmax_ev+10,-obj.Utility_fun(0:obj.Pmax_ev+10),'b-')
+                plot(0:obj.Pmax_ev+10,-lambda_i*(0:obj.Pmax_ev+10),'g-')
+                
+                plot(0:obj.Pmax_ev+10,fun(0:obj.Pmax_ev+10),'r-');
                 plot(Pev_i,fun(Pev_i),'b*');
+                hold off;
             end
         end
 

@@ -1,6 +1,6 @@
 classdef chooseNewmethod<A_OptMethod
     properties   
-        iter_max=200;
+        iter_max=100;
 
         beta=1;
         mu=1; 
@@ -18,7 +18,7 @@ classdef chooseNewmethod<A_OptMethod
 
             X1=[Pev;Pbuy];
             
-            Lambda=zeros(D.Nr+D.Ne,1)+0.1;
+            Lambda=zeros(D.Nr+D.Ne,1)+0.0;
 
             % Main iteration
             for iter=1:obj.iter_max 
