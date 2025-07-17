@@ -1,12 +1,11 @@
 classdef getData1ev1house<A_data
-    properties  
+    properties 
         Ne;Nr;T;
 
         BPVL;
         minREP;
         minEV;
-        minResident;
-
+        minResident; 
         % for EV
         beta_ev=8;omega_ev=1;Pmax_ev=10; %kw
         Capacity_EV=60;
@@ -20,7 +19,7 @@ classdef getData1ev1house<A_data
         % for battery
         Capacity_bat=0.1;% kw*h
 
-        numer_of_feeder;
+        number_of_feeder;
 
         GC;  
         GG;
@@ -42,10 +41,10 @@ classdef getData1ev1house<A_data
                 GC=GC621*0.001;GG=GG621*0.001;
             end 
             ne=1;nr=1;
-            obj.numer_of_feeder=1;
-            obj.GC=GC(1+5:nr*obj.numer_of_feeder+5,:);% kw
-            obj.GG=GG(1+5:nr*obj.numer_of_feeder+5,:);% kw
-            obj.Ne=ne*obj.numer_of_feeder;
+            obj.number_of_feeder=1;
+            obj.GC=GC(1+5:nr*obj.number_of_feeder+5,:);% kw
+            obj.GG=GG(1+5:nr*obj.number_of_feeder+5,:);% kw
+            obj.Ne=ne*obj.number_of_feeder;
             [Nr,NT]=size(obj.GC);
             obj.Nr=Nr;obj.T=NT;
             if is_constrain==0

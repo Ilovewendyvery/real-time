@@ -34,7 +34,7 @@ classdef (Abstract) A_data
         %£¨Columns correspond to times, rows correspond to users£©
         
         % Parameters about feeder
-        numer_of_feeder; % Total number of feeders      
+        number_of_feeder; % Total number of feeders      
         U_feeder;%A matrix containing feeder connectivity and user distribution information
         B_feeder;%A vector of feeder capacity
 
