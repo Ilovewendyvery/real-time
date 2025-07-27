@@ -1,10 +1,8 @@
 %run
-close all;
-ploterr()
-plotBESScharginganddischarging();
-plotFeeder_capacity;
+close all; 
+plotBESScharginganddischarging(); 
 
-load('New100.mat','obj')  
-drawSOC(obj,3,3)
+load('result/New100.mat','obj')  
+drawSOC(obj,30,30)
 draw2(obj)
 draw3(obj)

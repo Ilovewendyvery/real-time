@@ -3,6 +3,7 @@ classdef argMIN_EV
          beta_ev;
          omega_ev;
          Pmax_ev;
+         
 
          debug=0;
     end
@@ -11,7 +12,7 @@ classdef argMIN_EV
         function obj = argMIN_EV(beta_ev,omega_ev,Pmax_ev) 
             obj.beta_ev=beta_ev;
             obj.omega_ev=omega_ev;
-            obj.Pmax_ev=Pmax_ev;
+            obj.Pmax_ev=Pmax_ev; 
         end
 
         

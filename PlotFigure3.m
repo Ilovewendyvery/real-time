@@ -1,10 +1,16 @@
-function ploterr()  
+function PlotFigure3() 
+isupdata=false;
+if isupdata%If there is no data, recalculate.
+    calculate_residuals('100','Prox')
+    calculate_residuals('100','Corr')
+    calculate_residuals('100','New')
+end
 data='100err';
-load(strcat('Prox',data),'A'); 
+load(strcat('result/Prox',data),'A'); 
 A_Prox=A;
-load(strcat('Corr',data),'A'); 
+load(strcat('result/Corr',data),'A'); 
 A_Corr=A;
-load(strcat('New',data),'A'); 
+load(strcat('result/New',data),'A'); 
 A_New_our=A;
 
 k=3;

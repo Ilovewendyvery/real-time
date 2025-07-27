@@ -1,6 +1,6 @@
 function plotBESScharginganddischarging(TT)
 if nargin==0
-    TT='New100.mat';
+    TT='result/New100.mat';
 end
 
 load(TT,"obj")

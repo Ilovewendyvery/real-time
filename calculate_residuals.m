@@ -1,8 +1,4 @@
-function err()
-data='100';
-method='Corr';
-
-
+function calculate_residuals(data,method)
 close all; 
 A=struct();A.Oe=[];A.Ce=[];A.Fe=[];
 A.kk=3;
@@ -14,10 +10,10 @@ switch method
         mu=[1,1,1];
         beta=[0.5,0.6,0.7];
    case 'Prox'
-        beta=[0.5,0.6,0.7]*1;
+        beta=[0.5,0.6,0.7];
         mu=[0.01,0.02,1]*50;
     case 'Corr' 
-        beta=[0.5,0.6,0.7]*1;
+        beta=[0.5,0.6,0.7];
         gamma=[0.1,0.2,0.3]*5;
 end
 
@@ -65,6 +61,6 @@ xlabel('iteration step')
 legend(A.TTprimal)
 
 TT='err.mat';
-TT=strcat(method,data,TT);
+TT=strcat('result/',method,data,TT);
 save(TT,'A')
 end

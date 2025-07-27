@@ -12,7 +12,7 @@ classdef argMIN_Resident
 
          debug=0;
 
-         bat_beta=1;
+         bat_beta=1;% 0 or 1
     end
     
     methods
@@ -57,12 +57,12 @@ classdef argMIN_Resident
         end
 
 
-        function [Pbuy_j,Pbat_j] =Solve(obj,tilde_Lambda,X1_j,beta,PbuyOld,PbatOld,SOC,GG2Bat,mu,j,k) 
+        function [Pbuy_j,Pbat_j] =Solve(obj,tilde_Lambda,X1_j,beta,PbuyOld,PbatOld,SOC,GG2Bat,mu,j,k)
             % lambda;Augmented;Augmented_coefficient;Proximity;Proximity_coefficient
             fun = @(x) -obj.Utility_fun(x(:,1),x(:,2),j,k)+obj.Cost_func(x(:,2),GG2Bat,SOC)...
                        -tilde_Lambda*x(:,1)+0.5*beta*(x(:,1)-X1_j).^2+0.5*mu*(x(:,1)-PbuyOld).^2;%+0.5*mu*(x(:,2)-PbatOld).^2;  
 
-            ub=(SOC*obj.Capacity_bat+obj.eta*GG2Bat*obj.Time_int)*obj.eta/obj.Time_int;
+            ub=obj.bat_beta*(SOC*obj.Capacity_bat+obj.eta*GG2Bat*obj.Time_int)*obj.eta/obj.Time_int;
             x0=[PbuyOld,PbatOld];
 
             options = optimset('Display', 'off');

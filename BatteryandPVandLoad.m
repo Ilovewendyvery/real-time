@@ -7,7 +7,7 @@ classdef BatteryandPVandLoad < handle
 
         eta=0.95;     %Charging efficiency
         Capacity_bat; %battery capacity
-        Initial_power_percentage=0.1;
+        Initial_power_percentage=0.001;
         Time_int=0.5; %time interval 0.5h
         
         %Variables that need to be updated in real time

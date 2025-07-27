@@ -2,9 +2,9 @@ close all;
 
 obj= Algorithms('1','New');
 Solve_ALL(obj)
-save('NEW1house.mat',"obj")
+save('result/NEW1house.mat',"obj")
 
-load('NEW1house.mat','obj')
+load('result/NEW1house.mat','obj')
 figure(1)
 time=0.5:0.5:48/2;
 plot(time,obj.PevT, 'b-');   % À¶É«ÏßÌõ
@@ -24,8 +24,8 @@ grid on;
 
 obj= Algorithms('2','New');
 Solve_ALL(obj)
-save('NEW2house.mat',"obj")
-load('NEW2house.mat','obj')
+save('result/NEW2house.mat',"obj")
+load('result/NEW2house.mat','obj')
 figure(2)
 time=0.5:0.5:48/2;
 hold on;

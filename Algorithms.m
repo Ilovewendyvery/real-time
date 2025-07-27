@@ -10,14 +10,7 @@ classdef Algorithms<handle
     
     methods
         function obj = Algorithms(data,method)
-            switch data
-                case '1'
-                    obj.Data=getData1ev1house();
-                case '2'
-                    obj.Data=getData2ev2house();
-                case '100'
-                    obj.Data=getData100ev100house();
-            end
+            obj.Data=getData(data);
             switch method
                 case 'New'
                     obj.Method=chooseNewmethod();
@@ -61,37 +54,18 @@ classdef Algorithms<handle
             [Originale,Consistente,f]=obj.Method.Solve_convergence(obj.Data,GG2Batv,SOCv,SOCV_of_EV,1,new_s);
         end
         
-        
-%         function draw(obj)
-%             A=zeros(obj.Data.number_of_feeder,48);
-%             for i=1:obj.Data.number_of_feeder
-%                 for k=1:48
-%                     A(i,k)=A(i,k)+obj.Data.minREP.U_feeder(i,:)*[obj.PevT(:,k);obj.PbuyT(:,k)];
-%                 end
-%             end
-%             
-%             figure;
-%             time=(1:48)/2;
-%             
-%             legend_str = cell(obj.Data.number_of_feeder, 1);  % 创建图例字符串的单元格数组 
-%             
-%             hold on; 
-%             for i=1:obj.Data.number_of_feeder
-%                 plot(time,A(i,:),'LineWidth',1.5)
-%                 legend_str{i} = ['\beta=', num2str(obj.Data.minREP.B_feeder(i))];            
-%             end
-%             hold off;
-%             legend(legend_str, 'Location', 'best');  % 添加图例 
-%             xlabel('time(h)');ylabel('power(kW)') 
-%             title('Real-time loads on different feeders')
-%             box on
-%         end
+
         function drawSOC(obj,k1,k2)
+            
             figure;
             time=(0:48)/2;
             hold on;
-            plot(time,obj.Data.BPVL.SOC(k1,:))
-            plot(time,obj.Data.BPVL.SOC_of_EV(k2,:))
+            C=obj.Data.BPVL.Capacity_bat;
+            y=(obj.Data.BPVL.SOC(k1,:)*0.6*C+0.3*C)/C;
+            plot(time,y)
+            C2=obj.Data.BPVL.Capacity_EV;
+            y2=(obj.Data.BPVL.SOC_of_EV(k2,:)*1*C2+0*C2)/C2;
+            plot(time,y2)
             hold off;
             legend('SOC of Bat','SOC of EV')
         end
