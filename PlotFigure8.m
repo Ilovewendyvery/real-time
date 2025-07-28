@@ -22,24 +22,32 @@ colors = {'b', 'g', 'r', 'c', 'm', 'y', 'k','b', 'g', 'r', 'c', 'm', 'y', 'k'};
 time=0.5:0.5:obj.Data.T/2;
 figure;
 hold on;
-legend_str = cell(2*obj.Data.number_of_feeder, 1);  % åˆ›å»ºå›¾ä¾‹å­—ç¬¦ä¸²çš„å•å…ƒæ ¼æ•°ç»„
-for i=1:obj.Data.number_of_feeder
-    plot(time,(AA(i,:)*[obj.PevT;obj.PbuyT])/obj.Data.B_feeder(i), 'LineStyle', linestyle{1},'Color', colors{i},'LineWidth',2)
-    legend_str{i} = ['\beta=', num2str(floor(B(i)))];
-end 
- 
-
-TT='result/New12f_noRestrain.mat';
- 
-load(TT,'obj')  
-time=0.5:0.5:obj.Data.T/2;  
-for i=1:obj.Data.number_of_feeder
-    plot(time,(obj.Data.U_feeder(i,:)*[obj.PevT;obj.PbuyT])/B(i), 'LineStyle', linestyle{2},'Color', colors{i},'LineWidth',2)
-    legend_str{i+obj.Data.number_of_feeder} = 'Unlimited';
+% ±£´æ¾ä±úÒÔ¿ØÖÆ legend
+h_constrained = gobjects(obj.Data.number_of_feeder,1);
+for i = 1:obj.Data.number_of_feeder
+h_constrained(i) = plot(time, ...
+(AA(i,:) * [obj.PevT; obj.PbuyT]) / obj.Data.B_feeder(i), ...
+'LineStyle', linestyle{1}, ...
+'Color', colors{i}, ...
+'LineWidth', 2);
 end
+% ======= Load unconstrained result =======
+TT = 'result/New12f_noRestrain.mat';
+load(TT, 'obj')
+for i = 1:obj.Data.number_of_feeder
+h_unconstrained(i) = plot(time, ...
+(obj.Data.U_feeder(i,:) * [obj.PevT; obj.PbuyT]) / B(i), ...
+'LineStyle', linestyle{2}, ...
+'Color', colors{i}, ...
+'LineWidth', 2);
+end
+% ======= Add legend: only for blue lines =======
+% À¶É«ÊÇ colors{1} = 'b'£¬¼´ i=1 ºÍ i=8£¨ÄãÓĞÖØ¸´µÄ 'b'£©
+legend([h_constrained(1), h_unconstrained(1)], ...
+{'With constraint', 'Without constraint'}, ...
+'Location', 'best');
 hold off;
-legend(legend_str, 'Location', 'best');  % æ·»åŠ å›¾ä¾‹
-xlabel('Time(h)')
+xlabel('Time (h)')
 ylabel('Percentage')
-title('Powers percentage of  feeders with or without considering the capacity constraints')
-
+title('Powers percentage of feeders with or without considering the capacity constraints')
+box on
