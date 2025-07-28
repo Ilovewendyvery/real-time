@@ -58,7 +58,13 @@ classdef getData<handle
                     ne=20;nr=20;
                     obj.number_of_feeder=5;
                     obj.U_feeder=LineCapacityConstraints_5(ne,nr);
-                    obj.B_feeder=[9300;4800;1200;880;720]/15;% (kw)
+                    obj.B_feeder=[9300;4800;1200;880;720]/30;% (kw)
+                case '12f' 
+                    is_summer=1;
+                    ne=10;nr=10;
+                    obj.number_of_feeder=12;
+                    obj.U_feeder=LineCapacityConstraints_12(ne,nr);
+                    obj.B_feeder=[20000;3000;4800;3200;820;9300;3000;5200;3900;820;820;820]/15*0.4;% (kw)
             end
  
             load('data.mat'); 
@@ -120,3 +126,36 @@ A(3,Ne+(2*nr+1:3*nr))=1;
 A(4,Ne+(3*nr+1:4*nr))=1;
 A(5,Ne+(4*nr+1:5*nr))=1;
 end
+function [A]=LineCapacityConstraints_12(ne,nr)
+%13 bus 
+Ne=ne*12;Nr=nr*12; 
+A=zeros(12,Nr+Ne);B=zeros(12,1);
+
+A(1,1:Ne)=1;          
+A(2,1:ne)=1;          
+A(3,1:2*ne)=1;        
+A(4,3*ne+1:5*ne)=1;    
+A(5,4*ne+1:5*ne)=1;    
+A(6,5*ne+1:Ne)=1;      
+A(7,5*ne+1:6*ne)=1;    
+A(8,5*ne+1:6*ne)=1;A(8,10*ne+1:11*ne)=1;  
+A(9,8*ne+1:10*ne)=1;   
+A(10,9*ne+1:10*ne)=1;  
+A(11,10*ne+1:11*ne)=1; 
+A(12,11*ne+1:12*ne)=1; 
+
+
+
+         
+A(2,Ne+(1:nr))=1;          
+A(3,Ne+(1:2*nr))=1;        
+A(4,Ne+(3*nr+1:5*nr))=1;    
+A(5,Ne+(4*nr+1:5*nr))=1;    
+A(6,Ne+(5*nr+1:Nr))=1;      
+A(7,Ne+(5*nr+1:6*nr))=1;    
+A(8,Ne+(5*nr+1:6*nr))=1;A(8,Ne+(10*nr+1:11*nr))=1;  
+A(9,Ne+(8*nr+1:10*nr))=1;   
+A(10,Ne+(9*nr+1:10*nr))=1;  
+A(11,Ne+(10*nr+1:11*nr))=1; 
+A(12,Ne+(11*nr+1:12*nr))=1; 
+end 
