@@ -21,6 +21,9 @@ classdef Algorithms<handle
                 case 'Corr'
                     obj.Method=chooseCorrADMM();
                     obj.LambdaT=zeros(1,obj.Data.T);
+                case 'ADMM'
+                    obj.Method=ADMM();                    
+                    obj.LambdaT=zeros(1,obj.Data.T);
             end
             obj.PevT=zeros(obj.Data.Ne,obj.Data.T);
             obj.PbuyT=zeros(obj.Data.Nr,obj.Data.T);

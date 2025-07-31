@@ -15,6 +15,10 @@ switch method
     case 'Corr' 
         beta=[0.5,0.6,0.7];
         gamma=[0.1,0.2,0.3]*5;
+    case 'ADMM'
+        beta=[0.3,0.4,0.5,0.6]; 
+        gamma=[0.1,0.2,0.3,0.4]*2;
+
 end
 
 
@@ -33,6 +37,9 @@ for k=1:A.kk
             obj.Method.beta=beta(k); 
             obj.Method.gamma=gamma(k);
             A.TTprimal{k}=strcat('\beta=',num2str(beta(k)),'gamma=',num2str(gamma(k)));
+        case 'ADMM'
+            obj.Method.beta=beta(k);  
+            A.TTprimal{k}=strcat('\rho=',num2str(beta(k)),'gamma=',num2str(gamma(k)));
     end
 
     [Oe,Ce,Fe]=Solve_All_convergence(obj,A.new_s);
@@ -41,10 +48,13 @@ for k=1:A.kk
     figure(4)
     subplot(1,3,1)
     plot(1:A.new_s,A.Oe(k,:),'-','linewidth',1.5);hold on;
+    set(gca,'YScale', 'log');
     subplot(1,3,2)
     plot(1:A.new_s,A.Ce(k,:),'-','linewidth',1.5);hold on;
+    set(gca,'YScale', 'log');
     subplot(1,3,3)
     plot(1:A.new_s,A.Fe(k,:),'-','linewidth',1.5);hold on;
+    set(gca,'YScale', 'log');
 
 end
 subplot(1,3,1)

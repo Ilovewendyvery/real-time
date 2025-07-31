@@ -26,14 +26,14 @@ classdef argMIN_Resident
         end
         
         function U =Utility_fun(obj,Pbuy_j,Pbat_j,j,k) 
-            U=obj.omega_re*((Pbuy_j+Pbat_j+obj.GG2user(j,k))).^obj.alpha_re;
+            U=obj.omega_re*(Pbuy_j+Pbat_j+obj.GG2user(j,k)).^obj.alpha_re;
 
             idx=Pbuy_j+Pbat_j+obj.GG2user(j,k) > obj.GC(j,k);
             U(idx)= obj.omega_re*(obj.GC(j,k)).^obj.alpha_re; 
         end
 
         function C=Cost_func(obj,Pbat_j,GG2Bat_j,SOC) 
-            C=obj.bat_beta*(obj.Capacity_bat./(SOC*obj.Capacity_bat+obj.eta*GG2Bat_j*obj.Time_int-Pbat_j*obj.Time_int/obj.eta));
+            C=obj.bat_beta*(obj.Capacity_bat./(obj.Capacity_bat+SOC*obj.Capacity_bat+obj.eta*GG2Bat_j*obj.Time_int-Pbat_j*obj.Time_int/obj.eta));
         end 
  
 

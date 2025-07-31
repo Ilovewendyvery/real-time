@@ -1,5 +1,4 @@
 function PlotFigure2()
-close all;
 isupdata=false;
 if isupdata%If there is no data, recalculate.
     data='100';
