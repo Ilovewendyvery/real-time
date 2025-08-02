@@ -43,6 +43,7 @@ classdef argMIN_Resident
                        -tilde_Lambda*x(:,1)+0.5*beta*(x(:,1)-X1_j).^2+0.5*mu*(x(:,1)-PbuyOld).^2;%+0.5*mu*(x(:,2)-PbatOld).^2;  
 
             ub=obj.bat_beta*(SOC*obj.Capacity_bat+obj.eta*GG2Bat*obj.Time_int)*obj.eta/obj.Time_int;
+            ub=max([ub,0.01]);
             x0=[PbuyOld,PbatOld];
 
             options = optimset('Display', 'off');
@@ -63,6 +64,7 @@ classdef argMIN_Resident
                        -tilde_Lambda*x(:,1)+0.5*beta*(x(:,1)-X1_j).^2+0.5*mu*(x(:,1)-PbuyOld).^2;%+0.5*mu*(x(:,2)-PbatOld).^2;  
 
             ub=obj.bat_beta*(SOC*obj.Capacity_bat+obj.eta*GG2Bat*obj.Time_int)*obj.eta/obj.Time_int;
+            ub=max([ub,0.01]);
             x0=[PbuyOld,PbatOld];
 
             options = optimset('Display', 'off');

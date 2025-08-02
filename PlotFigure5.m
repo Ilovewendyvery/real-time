@@ -1,9 +1,9 @@
 function PlotFigure5()
 isupdata=false;
 if isupdata
-    obj= Algorithms('100','New');
-    Solve_ALL(obj)
-    save('result/New100_S20.mat','obj')
+    % obj= Algorithms('100','New');
+    % Solve_ALL(obj)
+    % save('result/New100_S20.mat','obj')
 
     obj= Algorithms('100','New');
     obj.Data.minREP.B_feeder=100000*ones(5,1);

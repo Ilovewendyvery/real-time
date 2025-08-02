@@ -1,5 +1,5 @@
 function PlotFigure9()
-steps=[1,3,5,8,20];
+steps=[1,3,8,30,40];
 isupdata=false;
 if isupdata
     for kk=1:length(steps)
