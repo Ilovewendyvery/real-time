@@ -24,7 +24,7 @@ classdef getData<handle
         a_rep=0.003;b_rep=0.03;c_rep=0; 
 
         % Parameters about battery
-        Capacity_bat=10;% kw*h       
+        Capacity_bat=10;% kw*h
         
         % Parameters about PV
         GC;  %A matrix of power regarding the needs of residents
@@ -58,13 +58,20 @@ classdef getData<handle
                     ne=20;nr=20;
                     obj.number_of_feeder=5;
                     obj.U_feeder=LineCapacityConstraints_5(ne,nr);
-                    obj.B_feeder=[9300;4800;1200;880;720]/30;% (kw)
+                    obj.B_feeder=[310; 50; 90; 50; 85];% (kw)
                 case '12f' 
                     is_summer=1;
-                    ne=10;nr=10;
+                    ne=30;nr=10;
                     obj.number_of_feeder=12;
                     obj.U_feeder=LineCapacityConstraints_12(ne,nr);
-                    obj.B_feeder=[20000;3000;4800;3200;820;9300;3000;5200;3900;820;820;820]/15*0.4;% (kw)
+                    obj.B_feeder=[500;120;40;120;40;350;120;40;120;40;120;40];% (kw)
+
+                case '100EG' 
+                    is_summer=1;
+                    ne=20;nr=20;
+                    obj.number_of_feeder=5;
+                    obj.U_feeder=LineCapacityConstraints_5(ne,nr);
+                    obj.B_feeder=[310; 50; 90; 50; 85];% (kw)
             end
  
             load('data.mat'); 
@@ -87,7 +94,7 @@ classdef getData<handle
                 obj.Lmax=obj.B_feeder(1);
             end 
 
-            obj.BPVL = BatteryandPVandLoad(obj.GC,obj.GG,obj.Capacity_bat,obj.Capacity_EV);
+            obj.BPVL = BatteryandPVandLoad(obj.GC,obj.GG,obj.Capacity_bat,obj.Capacity_EV,obj.Ne);
             obj.minREP=argMIN_REP(obj.U_feeder,obj.B_feeder,obj.a_rep,obj.b_rep,obj.c_rep,obj.Ne+obj.Nr);
             obj.minEV=argMIN_EV(obj.beta_ev,obj.omega_ev,obj.Pmax_ev);
             obj.minResident = argMIN_Resident(obj.BPVL,obj.GC,obj.alpha_re,obj.omega_re); 

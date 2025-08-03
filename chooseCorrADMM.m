@@ -1,6 +1,6 @@
 classdef chooseCorrADMM<A_OptMethod
     properties
-        iter_max=200;
+        iter_max=20;
         beta=1;
 
         gamma=1;

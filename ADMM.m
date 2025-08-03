@@ -1,6 +1,6 @@
 classdef ADMM<A_OptMethod
     properties
-        iter_max=200;
+        iter_max=30;
         beta=1;
 
         gamma=1;
@@ -12,33 +12,31 @@ classdef ADMM<A_OptMethod
         end
 
         function [Pev,Pbuy,Pbat,Lambda] = Solve(obj,D,GG2Bat,SOC,SOCV_of_EV,k)
+            rho=obj.beta;
             Pev=zeros(D.Ne,1);
             Pbuy=zeros(D.Nr,1);
             Pbat=zeros(D.Nr,1);
 
-            L=0;
-            Pold=[Pev;Pbuy;Pbat];
-            Lambda=0.1;
+            Pold=[Pev;Pbuy;Pbat]; L=0;Lambda=0;
 
             for iter=1:obj.iter_max
                 Lambdaold=Lambda;
 
 
-                %%
-                % 定义目标函数（非线�?�凸函数�?
                 GG2user_j_k=D.BPVL.GG2user(:,k);
                 GC_j_k=D.BPVL.GC(:,k);
                 GG2Bat_j=GG2Bat;
-                fun = @(P) sum(Utility_fun_EV(P(1:D.Ne,:)),2)...
-                    +sum(Utility_fun_Resident(P(1+D.Ne:D.Nr+D.Ne,:),P(1+D.Ne+D.Nr:end,:),GG2user_j_k,GC_j_k),2)...
-                    +sum(Cost_func(P(1+D.Ne+D.Nr:end),GG2Bat_j,SOC),2)...
-                    +rho/2*(sum(P(1:D.Ne,:))-L+Lambda)*(sum(P(1:D.Ne,:))-L+Lambda);
+                fun  = @(P) sum(-Utility_fun_EV(P(1:D.Ne,:)),1)...
+                    +sum(-Utility_fun_Resident(P(1+D.Ne:D.Nr+D.Ne,:),P(1+D.Ne+D.Nr:end,:),GG2user_j_k,GC_j_k),1)...
+                    +sum(Cost_func(P(1+D.Ne+D.Nr:end),GG2Bat_j,SOC),1)...
+                    +rho/2*(sum(P(1:D.Ne+D.Nr,:))-L+Lambda)*(sum(P(1:D.Ne+D.Nr,:))-L+Lambda);
 
                 % 初始�?
                 x0 = Pold;
 
                 % 线�?�不等式约束 A*x �? b
-                A=D.U_feeder;b=D.B_feeder;
+                b=D.B_feeder;
+                A=[D.U_feeder,zeros(length(b),D.Nr)];
 
                 % 线�?�等式约�? Aeq*x = beq
                 Aeq = [];
@@ -48,34 +46,37 @@ classdef ADMM<A_OptMethod
                 lb = zeros(1,D.Ne+D.Nr+D.Nr);
                 ub = zeros(1,D.Ne+D.Nr+D.Nr);
                 Pmax_ev=10;
-                ub(1:D.Ne)=Pmax_ev.*(SOCV_of_EV>=1);
+                ub(1:D.Ne)=Pmax_ev.*(SOCV_of_EV<=1);
 
                 Capacity_bat=10;% kw*h
                 bat_beta=1;
                 eta=0.95;
                 Time_int=0.5;
                 ub(1+D.Ne:D.Ne+D.Nr)=D.BPVL.GC(:,k);
-                ub(1+D.Ne+D.Nr:end)=bat_beta*(SOC*Capacity_bat+eta*GG2Bat*Time_int)*eta/Time_int;
-
+                ubat=bat_beta*(SOC*Capacity_bat+eta*GG2Bat*Time_int)*eta/Time_int;
+                ubat=max(ubat,0.01*ones(D.Nr,1));
+                ub(1+D.Ne+D.Nr:end)=ubat;
 
                 % 求解
-                options = optimoptions('fmincon', 'Display', 'iter', 'Algorithm', 'interior-point');
+                options = optimoptions('fmincon', 'Display', 'off', 'Algorithm', 'interior-point');
                 [P] = fmincon(fun, x0, A, b, Aeq, beq, lb, ub, [], options);
                 %%
 
                 % Solve each x_j-subproblem
-                L=D.minREP.Solve_T(Lambda,sum(P(1:D.Ne+D.Nr)),obj.beta,L,0);
+                L=D.minREP.Solve_T(-Lambda,sum(P(1:D.Ne+D.Nr)),obj.beta,L,0);
                 % Update dual variable
-                Lambda=Lambda+(sum(P(1:D.Ne+D.Nr))-L);
-                Pold=P;
+                Lambda=Lambda+obj.gamma*(sum(P(1:D.Ne+D.Nr))-L); 
 
+                Pold=P;
 
                 % Stopping criterion
                 if norm(Lambda-Lambdaold)/norm(Lambda)<=1e-3 && iter>3
                     break
                 end
             end
-
+            Pev=P(1:D.Ne,1);
+            Pbuy=P(1+D.Ne:D.Nr+D.Ne);
+            Pbat=P(1+D.Ne+D.Nr:end,1); 
         end
 
         function [Originale,Consistente,f,Pbat]=Solve_convergence(obj,D,GG2Bat,SOC,SOCV_of_EV,k,new_iter)
@@ -132,7 +133,7 @@ classdef ADMM<A_OptMethod
 
 
                 % 求解
-                options = optimoptions('fmincon', 'Display', 'iter', 'Algorithm', 'interior-point');
+                options = optimoptions('fmincon', 'Display', 'off', 'Algorithm', 'interior-point');
                 [P] = fmincon(fun, x0, A, b, Aeq, beq, lb, ub, [], options);
                 %%
 

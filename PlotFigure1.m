@@ -10,7 +10,7 @@ A_ADMM=A;
 load(strcat('result/New',data),'A'); 
 A_New_our=A;
 
-k=2;
+k=3;
 
 figure;
 

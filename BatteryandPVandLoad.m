@@ -19,7 +19,7 @@ classdef BatteryandPVandLoad < handle
     end
 
     methods
-        function obj = BatteryandPVandLoad(GC,GG,Capacity_bat,Capacity_EV)             
+        function obj = BatteryandPVandLoad(GC,GG,Capacity_bat,Capacity_EV,Ne)             
             obj.Nr=size(GC,1);
             obj.GC=GC;
             obj.GG=GG;
@@ -31,7 +31,7 @@ classdef BatteryandPVandLoad < handle
             obj.SOC(:,1)=obj.Initial_power_percentage; 
             obj.Capacity_bat=Capacity_bat;
 
-            obj.SOC_of_EV=zeros(obj.Nr,size(GC,2)+1);
+            obj.SOC_of_EV=zeros(Ne,size(GC,2)+1);
             obj.SOC_of_EV(:,1)=obj.Initial_power_percentage;   
             obj.Capacity_EV=Capacity_EV;
         end

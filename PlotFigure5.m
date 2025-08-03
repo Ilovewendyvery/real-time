@@ -6,10 +6,10 @@ if isupdata
     Solve_ALL(obj)
     save('result/New100_S40.mat','obj')
 
-    % obj= Algorithms('100','New');
-    % obj.Data.minREP.B_feeder=100000*ones(5,1);
-    % Solve_ALL(obj)
-    % save('result/New100_noRestrain.mat','obj')
+    obj= Algorithms('100','New');
+    obj.Data.minREP.B_feeder=100000*ones(5,1);
+    Solve_ALL(obj)
+    save('result/New100_noRestrain.mat','obj')
 end
  
  TT='result/New100_S40.mat';
@@ -43,3 +43,4 @@ hold off;
 xlabel('Time (h)')
 ylabel('Percentage')
 title('Powers percentage of feeders with or without considering the capacity constraints')
+box on
