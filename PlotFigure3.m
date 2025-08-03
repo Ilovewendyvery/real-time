@@ -1,5 +1,5 @@
 function PlotFigure3() 
-isupdata=true;
+isupdata=false;
 if isupdata%If there is no data, recalculate.
     calculate_residuals('100','Prox')
     calculate_residuals('100','Corr')

@@ -126,7 +126,9 @@ classdef ADMM<A_OptMethod
                 eta=0.95;
                 Time_int=0.5;
                 ub(1+D.Ne:D.Ne+D.Nr)=D.BPVL.GC(:,k);
-                ub(1+D.Ne+D.Nr:end)=bat_beta*(SOC*Capacity_bat+eta*GG2Bat*Time_int)*eta/Time_int;
+                ubat=bat_beta*(SOC*Capacity_bat+eta*GG2Bat*Time_int)*eta/Time_int;
+                ubat=max(ubat,0.01*ones(D.Nr,1));
+                ub(1+D.Ne+D.Nr:end)=ubat;
 
 
                 % 求解
@@ -139,7 +141,7 @@ classdef ADMM<A_OptMethod
                 % Update dual variable
                 Lambda=Lambda+obj.gamma*(sum(P(1:D.Ne+D.Nr))-L);
 
-                PPev=Pmax_ev.*(SOCV_of_EV>=1);PP=P;PP(1:D.Ne)=PPev;
+                PPev=Pmax_ev.*(SOCV_of_EV>=1);PP=P;PP(1:D.Ne)=max(PPev,P(1:D.Ne));
                 f(iter)=fun2(PP)+D.minREP.Cost_fun(L);
                 Originale(iter)=norm(sum(P(1:D.Ne+D.Nr))-L);
                 Consistente(iter)=norm(P(1:D.Ne+D.Nr)-Pold(1:D.Ne+D.Nr));

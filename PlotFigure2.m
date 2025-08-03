@@ -5,8 +5,8 @@ if isupdata%If there is no data, recalculate.
     method='New';
 
     % different parameters
-    mu=[1,1,1,1,0.8,1.2];
-    beta=[0.6,0.8,1,1.2,1,1];
+    mu=[1,1,1,1,0.1,10];
+    beta=[0.1,0.5,1,10,1,1];
 
     A=struct();A.Oe=[];A.Ce=[];A.Fe=[];
     A.TTprimal=cell(length(beta),1);
@@ -25,14 +25,16 @@ if isupdata%If there is no data, recalculate.
 end
 
 load('result/Figure2.mat','A')
+linestyle = {'-', '--', ':', '-.','--','-'};
+colors = {'b', 'g', 'r', 'c', 'm', 'y', 'k'};
 figure;
 for k=1:length(A.TTprimal)
     subplot(1,3,1)
-    plot(1:A.new_s,A.Oe(k,:),'-','linewidth',1.5);hold on;
+    plot(1:A.new_s,A.Oe(k,:),'-','linewidth',1.5,'LineStyle', linestyle{k}, 'Color', colors{k});hold on;
     subplot(1,3,2)
-    plot(1:A.new_s,A.Ce(k,:),'-','linewidth',1.5);hold on;
+    plot(1:A.new_s,A.Ce(k,:),'-','linewidth',1.5,'LineStyle', linestyle{k}, 'Color', colors{k});hold on;
     subplot(1,3,3)
-    plot(1:A.new_s,A.Fe(k,:),'-','linewidth',1.5);hold on;
+    plot(1:A.new_s,A.Fe(k,:),'-','linewidth',1,'LineStyle', linestyle{k}, 'Color', colors{k});hold on;
 
 end
 subplot(1,3,1)
@@ -49,5 +51,5 @@ subplot(1,3,3)
 ylabel('function value')
 xlabel('iteration step')
 legend(A.TTprimal)
-set(gca,'YScale', 'log');
+%set(gca,'YScale', 'log');
 end

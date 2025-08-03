@@ -33,17 +33,17 @@ plot(1:A_ADMM.new_s,A_New_our.Fe(k,:),'-','linewidth',1.5);hold off;
 subplot(1,3,1)
 ylabel('Primal error value')
 xlabel('iteration step')
-legend('Prox','Our')
+legend('CEN','DEN')
 set(gca,'YScale', 'log');
 subplot(1,3,2)
 ylabel('Dual error value')
 xlabel('iteration step')
-legend('Prox','Our') 
+legend('CEN','DEN') 
 set(gca,'YScale', 'log');
 subplot(1,3,3)
 ylabel('Function value')
 xlabel('iteration step')
-legend('Prox','Our')
+legend('CEN','DEN')
 set(gca,'YScale', 'log');
 %caption('Comparison of convergence speeds of the three methods')
 box on
