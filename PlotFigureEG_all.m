@@ -1,12 +1,12 @@
-function PlotFigureCENTER()
-steps=[50];
+function PlotFigureEG_all()
+steps=[1,3,8,30,40];
 isupdata=false;
 if isupdata
     for kk=1:length(steps)
-        obj= Algorithms('100','New');
+        obj= Algorithms('100EG','New');
         obj.Method.iter_max=steps(kk);
         Solve_ALL(obj)
-        save(strcat('result/New100_S',num2str(steps(kk)),'.mat'),'obj')
+        save(strcat('result/100EG_S',num2str(steps(kk)),'.mat'),'obj')
     end
 end
 
@@ -17,7 +17,7 @@ end
     hold on;
     legend_str = cell(length(steps), 1);  % 创建图例字符串的单元格数组
 for kk=1:length(steps)
-    TT=strcat('result/New100EG.mat');
+    TT=strcat('result/100EG_S',num2str(steps(kk)),'.mat');
     load(TT,'obj')
     AA=obj.Data.U_feeder;
     time=0.5:0.5:obj.Data.T/2; 
@@ -25,14 +25,6 @@ for kk=1:length(steps)
     plot(time,(AA(1,:)*[obj.PevT;obj.PbuyT]) , 'LineStyle', linestyle{1},'Color', colors{kk},'LineWidth',2)
     legend_str{kk} = ['Step=', num2str(steps(kk))]; 
 end
-% TT=strcat('result/New100_S40.mat');
-%     load(TT,'obj')
-%     AA=obj.Data.U_feeder;
-%     time=0.5:0.5:obj.Data.T/2; 
-% 
-%     plot(time,(AA(1,:)*[obj.PevT;obj.PbuyT]) , 'LineStyle', linestyle{1},'Color', colors{4},'LineWidth',2)
-%     legend_str{2} = ['D_Step=40']; 
- 
  
     % time=0.5:0.5:obj.Data.T/2; 
     % 
@@ -46,5 +38,5 @@ hold off;
 legend(legend_str, 'Location', 'best');  % 添加图例
 xlabel('Time(h)')
 ylabel('Power(kW)')
-title('Aggregated behaviors by applying Algorithm')
+title('Aggregated behaviors with heterogeneous EV by applying Algorithm')
 

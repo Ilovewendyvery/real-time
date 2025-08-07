@@ -1,18 +1,17 @@
-function PlotFigureCEN()
+function PlotFigureEG()
 isupdata=false;
 if isupdata
-    obj= Algorithms('100','New');
+    obj= Algorithms('100EG','New');
     obj.Method.iter_max=40;
     Solve_ALL(obj)
-    save('result/New100_S40.mat','obj')
+    save('result/New100EG_S40.mat','obj')
 
-    % obj= Algorithms('100','New');
-    % obj.Data.minREP.B_feeder=100000*ones(5,1);
-    % Solve_ALL(obj)
-    % save('result/New100_noRestrain.mat','obj')
+    obj= Algorithms('100EG','New');
+    obj.Data.minREP.B_feeder=100000*ones(5,1);
+    Solve_ALL(obj)
+    save('result/New100EG_noRestrain.mat','obj')
 end
- 
- % TT='result/ADMM100.mat';
+  
   TT='result/New100EG.mat';
  
 load(TT,'obj')
@@ -37,4 +36,4 @@ end
 hold off;
 xlabel('Time (h)')
 ylabel('Percentage')
-title('Powers percentage of feeders with or without considering the capacity constraints')
+title('Powers percentage under heterogeneous EV with or without considering the capacity constraints')

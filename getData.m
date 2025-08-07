@@ -47,18 +47,29 @@ classdef getData<handle
                     ne=1;nr=1;
                     obj.number_of_feeder=1;
                     obj.U_feeder=[];obj.B_feeder=[];
+                    Ne=ne*obj.number_of_feeder;
+                    Nr=nr*obj.number_of_feeder;
+                    dt=1;
                 case '2'
                     is_summer=1;
                     ne=1;nr=1;
                     obj.number_of_feeder=2;
                     obj.U_feeder=LineCapacityConstraints_2(ne,nr);
                     obj.B_feeder=[3;2];
+
+                    Ne=ne*obj.number_of_feeder;
+                    Nr=nr*obj.number_of_feeder;
+                    dt=1;
                 case '100'
                     is_summer=1;
                     ne=20;nr=20;
                     obj.number_of_feeder=5;
                     obj.U_feeder=LineCapacityConstraints_5(ne,nr);
-                    obj.B_feeder=[310; 50; 90; 50; 85];% (kw)
+                    obj.B_feeder=[310; 100; 90; 50; 85];% (kw)
+
+                    Ne=ne*obj.number_of_feeder;
+                    Nr=nr*obj.number_of_feeder;
+                    dt=1;
                 case '12f' 
                     is_summer=1;
                     ne=30;nr=10;
@@ -66,12 +77,19 @@ classdef getData<handle
                     obj.U_feeder=LineCapacityConstraints_12(ne,nr);
                     obj.B_feeder=[500;120;40;120;40;350;120;40;120;40;120;40];% (kw)
 
+                    Ne=ne*obj.number_of_feeder;
+                    Nr=nr*obj.number_of_feeder;
+                    dt=1;
+
                 case '100EG' 
-                    is_summer=1;
-                    ne=20;nr=20;
+                    is_summer=1; 
                     obj.number_of_feeder=5;
-                    obj.U_feeder=LineCapacityConstraints_5(ne,nr);
-                    obj.B_feeder=[310; 50; 90; 50; 85];% (kw)
+                    obj.U_feeder=LineCapacityConstraints_5EG();
+                    obj.B_feeder=[310; 100; 90; 50; 85];% (kw)
+
+                    Ne=100;
+                    Nr=80;
+                    dt=2;
             end
  
             load('data.mat'); 
@@ -80,10 +98,10 @@ classdef getData<handle
             else
                 GC=GC621*0.001;GG=GG621*0.001;
             end  
-            obj.GC=GC(2:nr*obj.number_of_feeder+1,:);% kw
-            obj.GG=GG(2:nr*obj.number_of_feeder+1,:);% kw
-            obj.Ne=ne*obj.number_of_feeder;
-            [Nr,NT]=size(obj.GC);
+            obj.GC=GC(2:Nr+1,1:dt:end);% kw
+            obj.GG=GG(2:Nr+1,1:dt:end);% kw
+            obj.Ne=Ne;
+            [~,NT]=size(obj.GC);
             obj.Nr=Nr;obj.T=NT; 
 
 
@@ -98,6 +116,13 @@ classdef getData<handle
             obj.minREP=argMIN_REP(obj.U_feeder,obj.B_feeder,obj.a_rep,obj.b_rep,obj.c_rep,obj.Ne+obj.Nr);
             obj.minEV=argMIN_EV(obj.beta_ev,obj.omega_ev,obj.Pmax_ev);
             obj.minResident = argMIN_Resident(obj.BPVL,obj.GC,obj.alpha_re,obj.omega_re); 
+
+            if strcmp(data, '100EG')
+               obj.BPVL.Time_int=1;
+               obj.minResident.Time_int=1; 
+            end
+        
+        
         end
 
     end
@@ -166,3 +191,22 @@ A(10,Ne+(9*nr+1:10*nr))=1;
 A(11,Ne+(10*nr+1:11*nr))=1; 
 A(12,Ne+(11*nr+1:12*nr))=1; 
 end 
+
+function [A]=LineCapacityConstraints_5EG()
+%5
+Ne=100;Nr=80;
+A=zeros(5,Nr+Ne);
+
+
+A(1,1:100)=1;
+A(2,[31:50,66:80])=1;
+A(3,51:65)=1;
+A(4,66:80)=1;
+A(5,81:100)=1;
+
+A(1,101:180)=1;
+A(2,[121:140,151:180])=1;
+A(3,141:150)=1;
+A(4,151:160)=1;
+A(5,161:180)=1;
+end
