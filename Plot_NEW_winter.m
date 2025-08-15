@@ -1,18 +1,7 @@
-function Plot_NEW_Constrain()
-isupdata=false;
-if isupdata
-    obj= Algorithms('100','New');
-    obj.Method.iter_max=40;
-    Solve_ALL(obj)
-    save('result/New100_S40.mat','obj')
+function Plot_NEW_winter()
 
-%     obj= Algorithms('100','New');
-%     obj.Data.minREP.B_feeder=100000*ones(5,1);
-%     Solve_ALL(obj)
-%     save('result/New100_noRestrain.mat','obj')
-end
+TT='result/New100winter.mat';
  
- TT='result/New100_S40.mat';
  
 load(TT,'obj')
 AA=obj.Data.U_feeder;
@@ -32,7 +21,7 @@ legend('feeder1','feeder2','feeder3','feeder4','feeder5')
 hold off;
 xlabel('Time (h)')
 ylabel('Percentage')
-title('Powers percentage of feeders with  considering the capacity constraints for 5 feeders in Summer')
+title('Powers percentage of feeders with  considering the capacity constraints for 5 feeders in Winter')
 box on
 
 
