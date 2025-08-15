@@ -1,4 +1,4 @@
-function PlotFigure5()
+function Plot_NEW_Constrain()
 isupdata=false;
 if isupdata
     obj= Algorithms('100','New');
@@ -27,18 +27,18 @@ for i=1:obj.Data.number_of_feeder
         'LineStyle', linestyle{1}, 'Color', colors{i}, 'LineWidth', 2);
 end 
 
-% TT='result/New100_noRestrain.mat';
-% load(TT,'obj') 
-% time=0.5:0.5:obj.Data.T/2;  
-% for i=1:obj.Data.number_of_feeder
-%     h2(i) = plot(time,(AA(i,:)*[obj.PevT;obj.PbuyT])/obj.Data.B_feeder(i), ...
-%         'LineStyle', linestyle{2}, 'Color', colors{i}, 'LineWidth', 2);
-% end
+TT='result/New100_noRestrain.mat';
+load(TT,'obj') 
+time=0.5:0.5:obj.Data.T/2;  
+for i=1:obj.Data.number_of_feeder
+    h2(i) = plot(time,(AA(i,:)*[obj.PevT;obj.PbuyT])/obj.Data.B_feeder(i), ...
+        'LineStyle', linestyle{2}, 'Color', colors{i}, 'LineWidth', 2);
+end
 
 % 只保留蓝色曲线的图例，且不带数字
 % 蓝色曲线是 colors{1}，即 i=1 的曲线
-%legend([h1(1), h2(1)], {'With constraint', 'Without constraint'}, 'Location', 'best');
-legend([h1(1)], {'With constraint'}, 'Location', 'best');
+legend([h1(1), h2(1)], {'With constraint', 'Without constraint'}, 'Location', 'best');
+% legend([h1(1)], {'With constraint'}, 'Location', 'best');
 
 hold off;
 xlabel('Time (h)')

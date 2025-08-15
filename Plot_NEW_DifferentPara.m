@@ -1,4 +1,4 @@
-function PlotFigure2()
+function Plot_NEW_DifferentPara()
 isupdata=false;
 if isupdata%If there is no data, recalculate.
     data='100';
@@ -40,16 +40,16 @@ end
 subplot(1,3,1)
 ylabel('Primal error value')
 xlabel('iteration step')
-legend(A.TTprimal, 'FontSize', 6); 
+legend(A.TTprimal); 
 set(gca,'YScale', 'log');
 subplot(1,3,2)
 ylabel('Dual error value')
 xlabel('iteration step')
-legend(A.TTprimal, 'FontSize', 6)
+legend(A.TTprimal)
 set(gca,'YScale', 'log');
 subplot(1,3,3)
 ylabel('function value')
 xlabel('iteration step')
-legend(A.TTprimal, 'FontSize', 6)
+legend(A.TTprimal)
 %set(gca,'YScale', 'log');
 end

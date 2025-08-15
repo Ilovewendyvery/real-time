@@ -1,34 +1,35 @@
-function PlotFigure1() 
+function Plot_residuals_of_CENTER_and_NEW() 
 isupdata=false;
 if isupdata%If there is no data, recalculate.
-    calculate_residuals('100','ADMM') 
-    calculate_residuals('100','New')
+    % calculate_residuals('100','New')
+    % calculate_residuals('100','ADMM') 
 end
 data='100err';
-load(strcat('result/ADMM',data),'A'); 
+load(strcat('result/ADMM',data),'A');
 A_ADMM=A; 
 load(strcat('result/New',data),'A'); 
 A_New_our=A;
-
-k=3;
+ 
 
 figure;
+kadmm=2;
+knew=1;
 
 subplot(1,3,1) 
 hold on; 
 box on 
-plot(1:A_ADMM.new_s,A_ADMM.Oe(k,:),'-','linewidth',1.5);
-plot(1:A_ADMM.new_s,A_New_our.Oe(k,:),'-','linewidth',1.5);hold off; 
+plot(1:A_ADMM.new_s,A_ADMM.Oe(kadmm,:),'-','linewidth',1.5);
+plot(1:150,A_New_our.Oe(knew,:),'-','linewidth',1.5);hold off; 
 subplot(1,3,2) 
 hold on;
 box on 
-plot(1:A_ADMM.new_s,A_ADMM.Ce(k,:),'-','linewidth',1.5);
-plot(1:A_ADMM.new_s,A_New_our.Ce(k,:),'-','linewidth',1.5);hold off;
+plot(1:A_ADMM.new_s,A_ADMM.Ce(kadmm,:),'-','linewidth',1.5);
+plot(1:150,A_New_our.Ce(knew,:),'-','linewidth',1.5);hold off;
 subplot(1,3,3)
 hold on;
 box on 
-plot(1:A_ADMM.new_s,A_ADMM.Fe(k,:),'-','linewidth',1.5);
-plot(1:A_ADMM.new_s,A_New_our.Fe(k,:),'-','linewidth',1.5);hold off;
+plot(1:A_ADMM.new_s,A_ADMM.Fe(kadmm,:),'-','linewidth',1.5);
+plot(1:150,A_New_our.Fe(knew,:),'-','linewidth',1.5);hold off;
 
 subplot(1,3,1)
 ylabel('Primal error value')

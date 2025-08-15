@@ -1,4 +1,4 @@
-function PlotFigureCEN5()
+function Plot_CEN5_all()
  
  
  TT='result/ADMM100.mat'; 

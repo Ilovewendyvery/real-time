@@ -1,4 +1,4 @@
-function PlotFigureEG()
+function Plot_Heterogeneous_feeders()
 isupdata=false;
 if isupdata
     obj= Algorithms('100EG','New');
@@ -23,11 +23,11 @@ figure;
 hold on;
 
 for i=1:obj.Data.number_of_feeder
-    h1(i) = plot(time,(AA(i,:)*[obj.PevT;obj.PbuyT])/obj.Data.B_feeder(i), ...
+     plot(time,(AA(i,:)*[obj.PevT;obj.PbuyT])/obj.Data.B_feeder(i), ...
         'LineStyle', linestyle{1}, 'Color', colors{i}, 'LineWidth', 2);
 end 
 
- 
+legend('feeder1','feeder2','feeder3','feeder4','feeder5')
 
 % 只保留蓝色曲线的图例，且不带数字
 % 蓝色曲线是 colors{1}，即 i=1 的曲线
@@ -37,3 +37,4 @@ hold off;
 xlabel('Time (h)')
 ylabel('Percentage')
 title('Powers percentage under heterogeneous EV with or without considering the capacity constraints')
+box on;

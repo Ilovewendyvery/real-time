@@ -74,7 +74,9 @@ classdef chooseNewmethod<A_OptMethod
             for iter=1:new_iter
                 fvalue=0;
                 PevPbuyold=[Pev;Pbuy]; 
-                X1=D.minREP.Solve_quadprog(Lambda,[Pev;Pbuy],obj.beta,X1,0,X1);
+                X1old=X1;
+                X1=D.minREP.Solve_quadprog(Lambda,[Pev;Pbuy],obj.beta,X1old,0,X1);
+                disp(norm(X1-X1old))
 
                 fvalue=fvalue+D.minREP.Cost_fun(X1);
                 %%
@@ -98,7 +100,9 @@ classdef chooseNewmethod<A_OptMethod
                     fvalue=fvalue-D.minResident.Utility_fun(x,y,j,k)+D.minResident.Cost_func(y,GG2Bat(j),SOC(j));
                 end                 
                 %%
+                Lambdaold=Lambda;
                 Lambda=Lambda-obj.beta*([Pev;Pbuy]-X1);
+                disp(-norm(Lambdaold-Lambda))
                 %%
                 f(iter)=fvalue;
                 Originale(iter)=norm([Pev;Pbuy]-X1);

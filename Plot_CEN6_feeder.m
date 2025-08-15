@@ -1,4 +1,4 @@
-function PlotFigureCEN6()
+function Plot_CEN6_feeder()
 isupdata=false;
 if isupdata
     % obj= Algorithms('100','ADMM');

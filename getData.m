@@ -65,12 +65,22 @@ classdef getData<handle
                     ne=20;nr=20;
                     obj.number_of_feeder=5;
                     obj.U_feeder=LineCapacityConstraints_5(ne,nr);
-                    obj.B_feeder=[310; 80; 90; 50; 85];% (kw)
+                    obj.B_feeder=[310; 100; 90; 50; 85];% (kw)
 
                     Ne=ne*obj.number_of_feeder;
                     Nr=nr*obj.number_of_feeder;
                     dt=1;
-                case '12f' 
+                case '100winter'
+                    is_summer=0;
+                    ne=20;nr=20;
+                    obj.number_of_feeder=5;
+                    obj.U_feeder=LineCapacityConstraints_5(ne,nr);
+                    obj.B_feeder=[310; 100; 90; 50; 85];% (kw)
+
+                    Ne=ne*obj.number_of_feeder;
+                    Nr=nr*obj.number_of_feeder;
+                    dt=1;
+                case '12f'
                     is_summer=1;
                     ne=30;nr=10;
                     obj.number_of_feeder=12;

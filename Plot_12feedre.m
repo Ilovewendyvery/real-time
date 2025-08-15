@@ -1,18 +1,18 @@
-function PlotFigure8()
+function Plot_12feedre()
 isupdata=false;
 if isupdata
     obj= Algorithms('12f','New');
-    obj.Method.iter_max=20;
+    obj.Method.iter_max=40;
     Solve_ALL(obj)
-    save('result/New12f1_S20.mat','obj')
+    save('result/New12f1_S40.mat','obj')
 
-    obj= Algorithms('12f','New');
-    obj.Data.minREP.B_feeder=100000*ones(12,1);
-    Solve_ALL(obj)
-    save('result/New12f_noRestrain.mat','obj')
+    % obj= Algorithms('12f','New');
+    % obj.Data.minREP.B_feeder=100000*ones(12,1);
+    % Solve_ALL(obj)
+    % save('result/New12f_noRestrain.mat','obj')
 end
  
- TT='result/New12f1_S20.mat';
+ TT='result/New12f_S40.mat';
  
 load(TT,'obj')
 AA=obj.Data.U_feeder;
@@ -31,21 +31,22 @@ h_constrained(i) = plot(time, ...
 'Color', colors{i}, ...
 'LineWidth', 2);
 end
-% ======= Load unconstrained result =======
-TT = 'result/New12f_noRestrain.mat';
-load(TT, 'obj')
-for i = 1:obj.Data.number_of_feeder
-h_unconstrained(i) = plot(time, ...
-(obj.Data.U_feeder(i,:) * [obj.PevT; obj.PbuyT]) / B(i), ...
-'LineStyle', linestyle{2}, ...
-'Color', colors{i}, ...
-'LineWidth', 2);
-end
+% % ======= Load unconstrained result =======
+% TT = 'result/New12f_noRestrain.mat';
+% load(TT, 'obj')
+% for i = 1:obj.Data.number_of_feeder
+% h_unconstrained(i) = plot(time, ...
+% (obj.Data.U_feeder(i,:) * [obj.PevT; obj.PbuyT]) / B(i), ...
+% 'LineStyle', linestyle{2}, ...
+% 'Color', colors{i}, ...
+% 'LineWidth', 2);
+% end
 % ======= Add legend: only for blue lines =======
 % 蓝色是 colors{1} = 'b'，即 i=1 和 i=8（你有重复的 'b'）
-legend([h_constrained(1), h_unconstrained(1)], ...
-{'With constraint', 'Without constraint'}, ...
-'Location', 'best');
+% legend([h_constrained(1), h_unconstrained(1)], ...
+% {'With constraint', 'Without constraint'}, ...
+% 'Location', 'best');
+legend('feeder1','feeder2','feeder3','feeder4','feeder5','feeder6','feeder7','feeder8','feeder9','feeder10','feeder11','feeder12')
 hold off;
 xlabel('Time (h)')
 ylabel('Percentage')

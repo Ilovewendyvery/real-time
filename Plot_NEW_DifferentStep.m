@@ -1,12 +1,12 @@
-function PlotFigure9()
-steps=[1,3,8,30,40];
+function Plot_NEW_DifferentStep()
+steps=[1,3,5,8,20];
 isupdata=false;
 if isupdata
     for kk=1:length(steps)
-        obj= Algorithms('12f','New');
+        obj= Algorithms('100','New');
         obj.Method.iter_max=steps(kk);
         Solve_ALL(obj)
-        save(strcat('result/New12f_S',num2str(steps(kk)),'.mat'),'obj')
+        save(strcat('result/New100_S',num2str(steps(kk)),'.mat'),'obj')
     end
 end
 
@@ -17,7 +17,7 @@ end
     hold on;
     legend_str = cell(length(steps), 1);  % 创建图例字符串的单元格数组
 for kk=1:length(steps)
-    TT=strcat('result/New12f_S',num2str(steps(kk)),'.mat');
+    TT=strcat('result/New100_S',num2str(steps(kk)),'.mat');
     load(TT,'obj')
     AA=obj.Data.U_feeder;
     time=0.5:0.5:obj.Data.T/2; 
@@ -38,5 +38,5 @@ hold off;
 legend(legend_str, 'Location', 'best');  % 添加图例
 xlabel('Time(h)')
 ylabel('Power(kW)')
-title('Aggregated behaviors of 12 feeders by applying Algorithm')
+title('Aggregated behaviors by applying Algorithm')
 

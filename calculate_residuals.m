@@ -2,12 +2,12 @@ function calculate_residuals(data,method)
 close all; 
 A=struct();A.Oe=[];A.Ce=[];A.Fe=[]; 
 
-A.new_s=100;
+A.new_s=150;
 
 switch method
     case 'New'
-        mu=[0.01,0.1,1,10,20];
-        beta=[1,1,1,1,1];
+        mu=[1,10,20];
+        beta=[1,1,1];
    case 'Prox'
         beta=[0.5,0.6,0.7];
         mu=[0.01,0.02,1]*50;
@@ -15,8 +15,8 @@ switch method
         beta=[0.5,0.6,0.7];
         gamma=[0.1,0.2,0.3]*5;
     case 'ADMM'
-        beta=[0.2,0.5,1,2]; 
-        gamma=[1,1,1,1];
+        beta=[0.5,1,2]; 
+        gamma=[1,1,1];
 
 end
 A.TTprimal=cell(length(beta),1);
