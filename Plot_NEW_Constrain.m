@@ -1,14 +1,14 @@
 function Plot_NEW_Constrain()
 %Updata
-isupdata=true;
+isupdata=false;
 if isupdata
     obj= Algorithms('100','New');
-    obj.Method.iter_max=150;
+    obj.Method.iter_max=40;
     Solve_ALL(obj)
-    save('result/New100_S150.mat','obj')
+    save('result/New100_S40.mat','obj')
 end
  
- TT='result/New100_S150.mat';
+ TT='result/New100_S40.mat';
  
 load(TT,'obj')
 AA=obj.Data.U_feeder;

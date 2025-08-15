@@ -65,7 +65,7 @@ classdef getData<handle
                     ne=20;nr=20;
                     obj.number_of_feeder=5;
                     obj.U_feeder=LineCapacityConstraints_5(ne,nr);
-                    obj.B_feeder=[310; 100; 90; 50; 85];% (kw)
+                    obj.B_feeder=[310; 200; 90; 50; 85];% (kw)
 
                     Ne=ne*obj.number_of_feeder;
                     Nr=nr*obj.number_of_feeder;
@@ -75,7 +75,7 @@ classdef getData<handle
                     ne=20;nr=20;
                     obj.number_of_feeder=5;
                     obj.U_feeder=LineCapacityConstraints_5(ne,nr);
-                    obj.B_feeder=[310; 100; 90; 50; 85];% (kw)
+                    obj.B_feeder=[310; 200; 90; 50; 85];% (kw)
 
                     Ne=ne*obj.number_of_feeder;
                     Nr=nr*obj.number_of_feeder;

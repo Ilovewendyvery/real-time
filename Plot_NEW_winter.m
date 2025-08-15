@@ -1,9 +1,9 @@
 function Plot_NEW_winter()
 %updata 
-isupdata=true;
+isupdata=false;
 if isupdata
     obj= Algorithms('100winter','New');
-    obj.Method.iter_max=150;
+    obj.Method.iter_max=40;
     Solve_ALL(obj)
     save('result/New100winter_S150.mat','obj')
 end
