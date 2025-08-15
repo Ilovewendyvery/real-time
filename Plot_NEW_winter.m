@@ -1,8 +1,15 @@
 function Plot_NEW_winter()
+%updata 
+isupdata=true;
+if isupdata
+    obj= Algorithms('100winter','New');
+    obj.Method.iter_max=150;
+    Solve_ALL(obj)
+    save('result/New100winter_S150.mat','obj')
+end
 
-TT='result/New100winter.mat';
- 
- 
+%plot
+TT='result/New100winter_S150.mat'; 
 load(TT,'obj')
 AA=obj.Data.U_feeder;
 linestyle = {'-', '--', ':', '-.','--',};
@@ -14,9 +21,7 @@ hold on;
 for i=1:obj.Data.number_of_feeder
     plot(time,(AA(i,:)*[obj.PevT;obj.PbuyT])/obj.Data.B_feeder(i), ...
         'LineStyle', linestyle{1}, 'Color', colors{i}, 'LineWidth', 2);
-end 
-
-
+end
 legend('feeder1','feeder2','feeder3','feeder4','feeder5')
 hold off;
 xlabel('Time (h)')

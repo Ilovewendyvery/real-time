@@ -1,18 +1,14 @@
 function Plot_NEW_Constrain()
-isupdata=false;
+%Updata
+isupdata=true;
 if isupdata
     obj= Algorithms('100','New');
-    obj.Method.iter_max=40;
+    obj.Method.iter_max=150;
     Solve_ALL(obj)
-    save('result/New100_S40.mat','obj')
-
-%     obj= Algorithms('100','New');
-%     obj.Data.minREP.B_feeder=100000*ones(5,1);
-%     Solve_ALL(obj)
-%     save('result/New100_noRestrain.mat','obj')
+    save('result/New100_S150.mat','obj')
 end
  
- TT='result/New100_S40.mat';
+ TT='result/New100_S150.mat';
  
 load(TT,'obj')
 AA=obj.Data.U_feeder;
