@@ -29,6 +29,5 @@ ylabel('Percentage')
 title('Powers percentage of feeders with  considering the capacity constraints for 5 feeders in Winter')
 box on
 
-
 end
 
