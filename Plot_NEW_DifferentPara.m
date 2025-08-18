@@ -28,6 +28,7 @@ load('result/Figure2.mat','A')
 linestyle = {'-', '--', ':', '-.','--','-'};
 colors = {'b', 'g', 'r', 'c', 'm', 'y', 'k'};
 figure;
+xdata=1:A.new_s;
 for k=1:length(A.TTprimal)
     subplot(1,3,1)
     plot(1:A.new_s,A.Oe(k,:),'-','linewidth',1.5,'LineStyle', linestyle{k}, 'Color', colors{k});hold on;
@@ -37,6 +38,7 @@ for k=1:length(A.TTprimal)
     plot(1:A.new_s,A.Fe(k,:),'-','linewidth',1,'LineStyle', linestyle{k}, 'Color', colors{k});hold on;
 
 end
+ydata=[A.Oe;A.Ce;A.Fe];
 subplot(1,3,1)
 ylabel('Primal error value')
 xlabel('iteration step')
@@ -52,4 +54,10 @@ ylabel('function value')
 xlabel('iteration step')
 legend(A.TTprimal)
 %set(gca,'YScale', 'log');
+
+
+
+
+data=[xdata',ydata'];
+writematrix(data, 'Diff_Para.csv');
 end
