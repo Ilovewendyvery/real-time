@@ -16,6 +16,8 @@ end
     figure;
     hold on;
     legend_str = cell(length(steps), 1);  % 创建图例字符串的单元格数组
+
+    ydata=zeros(5,24);
 for kk=1:length(steps)
     TT=strcat('result/100EG_S',num2str(steps(kk)),'.mat');
     load(TT,'obj')
@@ -24,6 +26,8 @@ for kk=1:length(steps)
    
     plot(time,(AA(1,:)*[obj.PevT;obj.PbuyT]) , 'LineStyle', linestyle{1},'Color', colors{kk},'LineWidth',2)
     legend_str{kk} = ['Step=', num2str(steps(kk))]; 
+
+    ydata(kk,:)=(AA(1,:)*[obj.PevT;obj.PbuyT]);
 end
  
     % time=0.5:0.5:obj.Data.T/2; 
@@ -40,3 +44,6 @@ xlabel('Time(h)')
 ylabel('Power(kW)')
 title('Aggregated behaviors with heterogeneous EV by applying Algorithm')
 box on;
+
+data=[time',ydata'];
+writematrix(data, 'EGStep.csv');

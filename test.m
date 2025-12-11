@@ -1,12 +1,13 @@
 clear;close all;
 figure(1)
-
-load("D:\WorkSpace\Code\real-time\result\ADMM100_S200.mat",'obj');
+load("D:\WorkSpace\Code\real-time\result\ADMM100_noRestrain.mat",'obj');
+draw(obj,'-s')
+load("D:\WorkSpace\Code\real-time\result\ADMM100.mat",'obj');
 draw(obj,'-^')
 load("D:\WorkSpace\Code\real-time\result\New100.mat",'obj');
 draw(obj,'-o') 
 % legend('EV','Resident','REP','bat','total','New-EV','New-Resident','New-REP','New-bat','New-total')
-
+legend('C-no','C','New')
 function draw(obj,TT)
 time=0.5:0.5:obj.Data.T/2;
 U_EV=zeros(1,48);
@@ -26,9 +27,13 @@ hold on;
 % plot(time,U_RE,TT); 
 % plot(time,U_REP,TT); 
 % plot(time,U_Bat,TT); 
-plot(time,obj.Data.BPVL.SOC(3,1:end-1))
-% plot(time,U_EV+U_RE+U_REP+U_Bat,TT,'linewidth',2)
+% plot(time,obj.Data.BPVL.SOC(3,1:end-1))
+plot(time,U_EV+U_RE+U_REP+U_Bat,TT,'linewidth',2)
+% time=0.5:0.5:obj.Data.T/2;
+%  plot(time,(obj.Data.U_feeder(1,:)*[obj.PevT;obj.PbuyT])/obj.Data.B_feeder(1))
+
 end
+
 
  
 

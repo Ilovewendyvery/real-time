@@ -21,7 +21,7 @@ classdef getData<handle
         omega_re=20;
 
         % Parameters about REP
-        a_rep=0.003;b_rep=0.03;c_rep=0; 
+        a_rep=0.004;b_rep=0.04;c_rep=0; 
 
         % Parameters about battery
         Capacity_bat=10;% kw*h
@@ -65,7 +65,7 @@ classdef getData<handle
                     ne=20;nr=20;
                     obj.number_of_feeder=5;
                     obj.U_feeder=LineCapacityConstraints_5(ne,nr);
-                    obj.B_feeder=[350; 200; 90; 70; 85];% (kw)
+                    obj.B_feeder=[200; 120; 60; 50; 65];% (kw)
 
                     Ne=ne*obj.number_of_feeder;
                     Nr=nr*obj.number_of_feeder;
@@ -75,7 +75,7 @@ classdef getData<handle
                     ne=20;nr=20;
                     obj.number_of_feeder=5;
                     obj.U_feeder=LineCapacityConstraints_5(ne,nr);
-                    obj.B_feeder=[350; 200; 90; 70; 85];% (kw)
+                    obj.B_feeder=[200; 120; 60; 50; 65];% (kw)
 
                     Ne=ne*obj.number_of_feeder;
                     Nr=nr*obj.number_of_feeder;
@@ -95,7 +95,7 @@ classdef getData<handle
                     is_summer=1; 
                     obj.number_of_feeder=5;
                     obj.U_feeder=LineCapacityConstraints_5EG();
-                    obj.B_feeder=[350; 200; 90; 70; 85];% (kw)
+                    obj.B_feeder=[200; 120; 60; 50; 65];% (kw)
 
                     Ne=100;
                     Nr=80;

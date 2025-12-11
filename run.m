@@ -15,27 +15,27 @@ close all;
 % Solve_ALL(obj)
 % save('result/New12f_noRestrain.mat','obj')
 %%
-% %5馈线 
+% % % %5馈线 
 % obj= Algorithms('100','New');
 % Solve_ALL(obj)
 % save('result/New100.mat','obj')
 % obj= Algorithms('100winter','New');
 % Solve_ALL(obj)
 % save('result/New100winter.mat','obj')
-%%
-%5馈线无约束
+
+% % 5馈线无约束
 % obj= Algorithms('100','New');
 % obj.Data.minREP.B_feeder=100000*ones(5,1);
 % Solve_ALL(obj)
 % save('result/New100_noRestrain.mat','obj')
 
 %%
-%5馈线集中求解 
-obj= Algorithms('100','ADMM');
-obj.Method.iter_max=40;
-Solve_ALL(obj)
-save('result/ADMM100.mat','obj')
-%%
+% %5馈线集中求解 
+% obj= Algorithms('100','ADMM');
+% obj.Method.iter_max=100;
+% Solve_ALL(obj)
+% save('result/ADMM100.mat','obj')
+% %
 
 
 

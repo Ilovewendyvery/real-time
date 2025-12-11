@@ -22,9 +22,11 @@ time=0.5:0.5:obj.Data.T/2;
 figure;
 hold on;
 
+ydata=zeros(12,24);
 for i=1:obj.Data.number_of_feeder
      plot(time,(AA(i,:)*[obj.PevT;obj.PbuyT])/obj.Data.B_feeder(i), ...
         'LineStyle', linestyle{1}, 'Color', colors{i}, 'LineWidth', 2);
+     ydata(i,:)=(AA(i,:)*[obj.PevT;obj.PbuyT])/obj.Data.B_feeder(i);
 end 
 
 legend('feeder1','feeder2','feeder3','feeder4','feeder5')
@@ -38,3 +40,6 @@ xlabel('Time (h)')
 ylabel('Percentage')
 title('Powers percentage under heterogeneous EV with or without considering the capacity constraints')
 box on;
+
+data=[time',ydata'];
+writematrix(data, 'EGfeeder.csv');

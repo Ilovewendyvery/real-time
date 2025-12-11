@@ -24,12 +24,15 @@ figure;
 hold on;
 % ±£´æ¾ä±úÒÔ¿ØÖÆ legend
 h_constrained = gobjects(obj.Data.number_of_feeder,1);
+ydata=zeros(12,48);
 for i = 1:obj.Data.number_of_feeder
 h_constrained(i) = plot(time, ...
 (AA(i,:) * [obj.PevT; obj.PbuyT]) / obj.Data.B_feeder(i), ...
 'LineStyle', linestyle{1}, ...
 'Color', colors{i}, ...
 'LineWidth', 2);
+
+ydata(i,:)=(AA(i,:) * [obj.PevT; obj.PbuyT]) / obj.Data.B_feeder(i);
 end
 % % ======= Load unconstrained result =======
 % TT = 'result/New12f_noRestrain.mat';
@@ -52,3 +55,7 @@ xlabel('Time (h)')
 ylabel('Percentage')
 title('Powers percentage of feeders with or without considering the capacity constraints')
 box on
+
+
+data=[time',ydata'];
+writematrix(data, '12feeder.csv');

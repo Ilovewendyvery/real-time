@@ -8,7 +8,7 @@ if isupdata
     save('result/New100_S40.mat','obj')
 end
  
- TT='result/New100_S40.mat';
+ TT='result/New100.mat';
  
 load(TT,'obj')
 AA=obj.Data.U_feeder;
@@ -35,6 +35,6 @@ box on
 
 xdata=time;
 data=[xdata',ydata'];
-writematrix(data, '5overleadingCWinter.csv');
+writematrix(data, '5overleadingCSummer.csv');
 end
 

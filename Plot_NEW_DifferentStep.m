@@ -1,6 +1,6 @@
 function Plot_NEW_DifferentStep()
 steps=[1,3,5,8,20];
-isupdata=false;
+isupdata=true;
 if isupdata
     for kk=1:length(steps)
         obj= Algorithms('100','New');

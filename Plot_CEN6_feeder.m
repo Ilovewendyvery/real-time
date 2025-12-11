@@ -7,13 +7,13 @@ if isupdata
     % save('result/ADMM100.mat','obj')
 
     obj= Algorithms('100','ADMM');
-    obj.Method.iter_max=30;
+    obj.Method.iter_max=50;
     obj.Data.B_feeder=100000*ones(5,1);
     Solve_ALL(obj)
     save('result/ADMM100_noRestrain.mat','obj')
 end
  
- TT='result/ADMM100_S400.mat'; 
+ TT='result/ADMM100.mat'; 
  
 load(TT,'obj')
 AA=obj.Data.U_feeder; 

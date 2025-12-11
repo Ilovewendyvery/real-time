@@ -5,11 +5,11 @@ if isupdata
     obj= Algorithms('100winter','New');
     obj.Method.iter_max=40;
     Solve_ALL(obj)
-    save('result/New100winter_S150.mat','obj')
+    save('result/New100winter.mat','obj')
 end
 
 %plot
-TT='result/New100winter_S150.mat'; 
+TT='result/New100winter.mat'; 
 load(TT,'obj')
 AA=obj.Data.U_feeder;
 linestyle = {'-', '--', ':', '-.','--',};
@@ -34,6 +34,6 @@ box on
 
 xdata=time;
 data=[xdata',ydata'];
-writematrix(data, '5overleadingCSummer.csv');
+writematrix(data, '5overleadingCWinter.csv');
 end
 

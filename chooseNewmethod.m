@@ -1,6 +1,6 @@
 classdef chooseNewmethod<A_OptMethod
     properties   
-        iter_max=30;
+        iter_max=50;
 
         beta=1;
         mu=1; 
