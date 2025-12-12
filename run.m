@@ -16,9 +16,9 @@ close all;
 % save('result/New12f_noRestrain.mat','obj')
 %%
 % % % %5馈线 
-% obj= Algorithms('100','New');
-% Solve_ALL(obj)
-% save('result/New100.mat','obj')
+obj= Algorithms('100','New');
+Solve_ALL(obj)
+save('result/New100.mat','obj')
 % obj= Algorithms('100winter','New');
 % Solve_ALL(obj)
 % save('result/New100winter.mat','obj')
